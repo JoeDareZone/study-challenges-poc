@@ -44,6 +44,10 @@ export default function RootLayout() {
 						name='flashcards'
 						options={{ headerShown: false }}
 					/>
+					<Stack.Screen
+						name='quiz'
+						options={{ headerShown: false }}
+					/>
 				</Stack>
 			</SafeAreaView>
 		</GestureHandlerRootView>

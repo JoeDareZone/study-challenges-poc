@@ -1,3 +1,4 @@
+import { router } from 'expo-router'
 import React, { useRef } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import CardsSwipe from 'react-native-cards-swipe'
@@ -46,6 +47,9 @@ export default function FlashcardScreen() {
 						</Text>
 					</View>
 				)}
+				onNoMoreCards={() => {
+					router.push(`/quiz`)
+				}}
 			/>
 		</View>
 	)
