@@ -39,7 +39,9 @@ export default function QuizScreen() {
 			setCurrentQuestion(currentQuestion + 1)
 			setSelectedAnswer(null)
 		} else {
-			// router.push(`/result?score=${score + 1}&total=${quizQuestions.length}`)
+			router.push(
+				`/result?score=${score + 1}&total=${quizQuestions.length}`
+			)
 		}
 	}
 
@@ -51,7 +53,9 @@ export default function QuizScreen() {
 			</Text>
 
 			{/* Question */}
-			<Text className='text-2xl font-bold mb-6'>{quizQuestions[currentQuestion].question}</Text>
+			<Text className='text-2xl font-bold mb-6'>
+				{quizQuestions[currentQuestion].question}
+			</Text>
 
 			{/* Answer Options */}
 			{quizQuestions[currentQuestion].options.map(option => (
@@ -62,7 +66,13 @@ export default function QuizScreen() {
 					}`}
 					onPress={() => handleAnswerSelect(option)}
 				>
-					<Text className={`text-lg font-semibold ${selectedAnswer === option ? 'text-white' : 'text-gray-800'}`}>
+					<Text
+						className={`text-lg font-semibold ${
+							selectedAnswer === option
+								? 'text-white'
+								: 'text-gray-800'
+						}`}
+					>
 						{option}
 					</Text>
 				</TouchableOpacity>
@@ -77,7 +87,9 @@ export default function QuizScreen() {
 				disabled={!selectedAnswer}
 			>
 				<Text className='text-lg font-bold text-white text-center'>
-					{currentQuestion === quizQuestions.length - 1 ? 'Finish' : 'Next'}
+					{currentQuestion === quizQuestions.length - 1
+						? 'Finish'
+						: 'Next'}
 				</Text>
 			</TouchableOpacity>
 		</View>
