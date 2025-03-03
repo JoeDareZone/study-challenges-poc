@@ -1,27 +1,27 @@
-import { useGlobalSearchParams, useRouter } from 'expo-router'
 import React from 'react'
 import { Text, View } from 'react-native'
-import CardsSwipe from 'react-native-cards-swipe';
+
+import CardsSwipe from 'react-native-cards-swipe'
 
 const cardsData = [
-	{ text: 'Hello' },
-	{ text: 'Hello' },
-	{ text: 'Hello' },
-	{ text: 'Hello' },
+	{ text: 'Card 1' },
+	{ text: 'Card 2' },
+	{ text: 'Card 3' },
+	{ text: 'Card 4' },
 ]
 
-export default function FlashcardsScreen() {
-	const router = useRouter()
-	const { grade, subject } = useGlobalSearchParams()
-
+export default function App() {
 	return (
-		<View className='flex-1 px-5 bg-white justify-center items-center'>
+		<View className='flex-1 items-center justify-center px-4 py-24'>
 			<CardsSwipe
 				cards={cardsData}
-				// cardContainerStyle='w-11/12 h-7/10 rounded-lg shadow-md'
+				cardContainerStyle={{
+					width: '100%',
+					height: '100%',
+				}}
 				renderCard={card => (
-					<View className='w-full h-full rounded-lg overflow-hidden'>
-						<Text>{card.text}</Text>
+					<View className='w-full h-full items-center justify-center bg-white rounded-2xl shadow-sm'>
+						<Text className='text-2xl font-bold'>{card.text}</Text>
 					</View>
 				)}
 			/>
