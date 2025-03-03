@@ -1,29 +1,30 @@
-// FlashcardsScreen.js
 import { useGlobalSearchParams, useRouter } from 'expo-router'
-import { Text, TouchableOpacity, View } from 'react-native'
+import React from 'react'
+import { Text, View } from 'react-native'
+import CardsSwipe from 'react-native-cards-swipe';
+
+const cardsData = [
+	{ text: 'Hello' },
+	{ text: 'Hello' },
+	{ text: 'Hello' },
+	{ text: 'Hello' },
+]
 
 export default function FlashcardsScreen() {
 	const router = useRouter()
-	const { grade, subject } = useGlobalSearchParams() 
+	const { grade, subject } = useGlobalSearchParams()
 
 	return (
-		<View className='flex-1 bg-gray-100 p-5'>
-			<Text className='text-2xl font-bold mb-4'>
-				Flashcards for {subject} ({grade})
-			</Text>
-
-			<Text className='text-lg mb-4'>Flashcards content goes here</Text>
-
-			<TouchableOpacity
-				className='bg-blue-500 p-4 rounded-lg mt-5'
-				onPress={() =>
-					router.push(`/quiz?grade=${grade}&subject=${subject}`)
-				} 
-			>
-				<Text className='text-white text-lg font-bold text-center'>
-					Start Quiz
-				</Text>
-			</TouchableOpacity>
+		<View className='flex-1 px-5 bg-white justify-center items-center'>
+			<CardsSwipe
+				cards={cardsData}
+				// cardContainerStyle='w-11/12 h-7/10 rounded-lg shadow-md'
+				renderCard={card => (
+					<View className='w-full h-full rounded-lg overflow-hidden'>
+						<Text>{card.text}</Text>
+					</View>
+				)}
+			/>
 		</View>
 	)
 }
