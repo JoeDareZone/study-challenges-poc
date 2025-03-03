@@ -12,11 +12,11 @@ export default function ResultScreen() {
 				Your Score: {score} / {total}
 			</Text>
 
-			<TouchableOpacity
+			<TouchableOpacity   
 				className='w-full p-4 rounded-lg bg-blue-500'
-				onPress={() => router.push('/quiz')}
+				onPress={() => router.push('/')}
 			>
-				<Text className='text-lg font-bold text-white text-center'>Restart</Text>
+				<Text className='text-lg font-bold text-white text-center'>Home</Text>
 			</TouchableOpacity>
 		</View>
 	)
