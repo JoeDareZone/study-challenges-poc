@@ -6,7 +6,6 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 export default function HomeScreen() {
 	const router = useRouter()
 
-	// Mock active challenges
 	const [challenges, setChallenges] = useState([
 		{ id: '1', subject: 'Math', grade: 'Grade 7', progress: '50%' },
 		{ id: '2', subject: 'Science', grade: 'Grade 8', progress: '30%' },
@@ -40,7 +39,7 @@ export default function HomeScreen() {
 				ListFooterComponent={
 					<TouchableOpacity
 						className='bg-blue-500 p-4 rounded-lg mt-5 mb-20'
-						onPress={() => router.push('/challenges')}
+						onPress={() => router.push('/grades')}
 					>
 						<Text className='text-white text-lg font-bold text-center'>
 							Start New Challenge
