@@ -1,5 +1,5 @@
 import { useRouter } from 'expo-router'
-import { SafeAreaView, Text, TouchableOpacity } from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
 
 export default function GradesScreen() {
 	const router = useRouter()
@@ -7,7 +7,7 @@ export default function GradesScreen() {
 	const grades = ['Grade 7', 'Grade 8', 'Grade 9']
 
 	return (
-		<SafeAreaView className='flex-1 bg-gray-100 p-5'>
+		<View className='flex-1 bg-gray-100 p-5'>
 			<Text className='text-2xl font-bold mb-4'>Select Your Grade</Text>
 
 			{grades.map(grade => (
@@ -19,6 +19,6 @@ export default function GradesScreen() {
 					<Text className='text-lg font-semibold'>{grade}</Text>
 				</TouchableOpacity>
 			))}
-		</SafeAreaView>
+		</View>
 	)
 }

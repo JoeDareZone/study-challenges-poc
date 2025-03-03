@@ -1,7 +1,6 @@
 import { useRouter } from 'expo-router'
 import { useState } from 'react'
-import { FlatList, Text, TouchableOpacity } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { FlatList, Text, TouchableOpacity, View } from 'react-native'
 
 export default function HomeScreen() {
 	const router = useRouter()
@@ -12,7 +11,7 @@ export default function HomeScreen() {
 	])
 
 	return (
-		<SafeAreaView className='flex-1 bg-gray-100 p-5'>
+		<View className='flex-1 bg-gray-100 p-5'>
 			<Text className='text-2xl font-bold mb-4'>Study Challenges</Text>
 
 			<FlatList
@@ -47,6 +46,6 @@ export default function HomeScreen() {
 					</TouchableOpacity>
 				}
 			/>
-		</SafeAreaView>
+		</View>
 	)
 }
