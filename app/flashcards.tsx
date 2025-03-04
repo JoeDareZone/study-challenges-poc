@@ -27,12 +27,14 @@ export default function FlashcardScreen() {
 		fetchQuizQuestions,
 		loadStoredQuiz,
 	} = useQuiz(
-		Categories[subject as keyof typeof Categories],
-		getDifficulty(grade as string)
+		getDifficulty(grade as string),
+		Categories[subject as keyof typeof Categories]
 	)
 
 	useEffect(() => {
-		loadStoredQuiz()
+		loadStoredQuiz().then(() => {
+			// quizQuestions.length > 0 ? null : fetchQuizQuestions()
+		})
 	}, [])
 
 	const handleRating = async (index: number, rating: Rating) => {

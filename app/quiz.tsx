@@ -1,30 +1,19 @@
+import { useQuiz } from '@/hooks/useQuiz'
+import { Categories } from '@/constants/Categories'
+import { getDifficulty } from '@/helpers/getDifficulty'
 import { useRouter } from 'expo-router'
 import { useState } from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
-
-const quizQuestions = [
-	{
-		question: 'What is the capital of France?',
-		options: ['Paris', 'Berlin', 'Madrid', 'Rome'],
-		answer: 'Paris',
-	},
-	{
-		question: 'Which planet is known as the Red Planet?',
-		options: ['Earth', 'Mars', 'Jupiter', 'Saturn'],
-		answer: 'Mars',
-	},
-	{
-		question: 'What is the square root of 64?',
-		options: ['6', '7', '8', '9'],
-		answer: '8',
-	},
-]
 
 export default function QuizScreen() {
 	const router = useRouter()
 	const [currentQuestion, setCurrentQuestion] = useState(0)
 	const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null)
 	const [score, setScore] = useState(0)
+	const { quizQuestions, loading, error, fetchQuizQuestions, loadStoredQuiz } = useQuiz(
+		getDifficulty(grade as string),
+		Categories[subject as keyof typeof Categories]
+	)
 
 	const handleAnswerSelect = (option: string) => {
 		setSelectedAnswer(option)
