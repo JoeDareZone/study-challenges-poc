@@ -1,13 +1,14 @@
 import { useQuiz } from '@/hooks/useQuiz'
 import { router, useLocalSearchParams } from 'expo-router'
-import React, { useEffect, useRef } from 'react'
-import { Text, View } from 'react-native'
+import React, { useEffect } from 'react'
+import { StyleSheet, Text, View } from 'react-native'
 import CardsSwipe from 'react-native-cards-swipe'
+import FlipCard from 'react-native-flip-card'
 import { Rating } from 'ts-fsrs'
 import { updateFlashcard } from '../utils/flashcardStorage'
 
 export default function FlashcardScreen() {
-	const swiper = useRef<any>(null)
+	// const swiper = useRef<any>(null)
 	const { grade, subject } = useLocalSearchParams()
 	// const [flashcards, setFlashcards] = useState<any[]>([]);
 
@@ -41,14 +42,31 @@ export default function FlashcardScreen() {
 		<View className='flex-1 items-center justify-center px-4 py-24'>
 			{flashcards.length > 0 ? (
 				<CardsSwipe
-					ref={swiper}
+					// ref={swiper}
 					cards={flashcards}
-                    
+					cardContainerStyle={{ width: '100%', height: '100%' }}
+					lowerCardZoom={0.6}
 					renderCard={card => (
-						<View className='w-full h-full items-center justify-center bg-white rounded-2xl shadow-sm p-5'>
-							<Text className='text-2xl font-bold'>
-								{card.question}
-							</Text>
+						<View className='w-full h-full items-center justify-center'>
+							<FlipCard
+								// style={{ width: '100%', height: '100%' }}
+								flipHorizontal={true}
+								flipVertical={false}
+								flip={false}
+								alignHeight
+								alignWidth
+							>
+								<View className='w-full h-full items-center justify-center bg-white rounded-2xl shadow-sm p-5'>
+									<Text className='text-2xl font-bold'>
+										{card.question}
+									</Text>
+								</View>
+								<View className='w-full h-full items-center justify-center bg-white rounded-2xl shadow-sm p-5'>
+									<Text className='text-2xl font-bold'>
+										{card.answer}
+									</Text>
+								</View>
+							</FlipCard>
 						</View>
 					)}
 					renderNoMoreCard={() => (
@@ -109,3 +127,10 @@ export default function FlashcardScreen() {
 		</View>
 	)
 }
+
+const styles = StyleSheet.create({
+	card: {
+		width: '100%',
+		height: '100%',
+	},
+})
