@@ -94,7 +94,7 @@ export default function FlashcardScreen() {
 						</View>
 					)}
 					onNoMoreCards={() => {
-						router.push(`/quiz`)
+						router.push(`/quiz?grade=${grade}&subject=${subject}`)
 					}}
 				/>
 			) : (
