@@ -8,28 +8,42 @@ import { Text, TouchableOpacity, View } from 'react-native'
 
 export default function QuizScreen() {
 	const { grade, subject } = useLocalSearchParams()
-
 	const router = useRouter()
+
 	const [currentQuestion, setCurrentQuestion] = useState(0)
 	const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null)
 	const [score, setScore] = useState(0)
+	const [isLoading, setIsLoading] = useState(true)
+	const [shuffledAnswers, setShuffledAnswers] = useState<string[]>([])
+
 	const { quizQuestions, loadStoredQuiz } = useQuiz(
 		getDifficulty(grade as string),
 		Categories[subject as keyof typeof Categories]
 	)
-	const [isLoading, setIsLoading] = useState(true)
+
+	const shuffleArray = (array: string[]) => {
+		return array.sort(() => Math.random() - 0.5)
+	}
+
+	useEffect(() => {
+		loadStoredQuiz().then(() => {
+			setIsLoading(false)
+		})
+	}, [])
+
+	useEffect(() => {
+		if (quizQuestions.length > 0) {
+			const answers = shuffleArray([
+				quizQuestions[currentQuestion].correct_answer,
+				...quizQuestions[currentQuestion].incorrect_answers,
+			])
+			setShuffledAnswers(answers)
+		}
+	}, [currentQuestion, quizQuestions]) 
 
 	const handleAnswerSelect = (option: string) => {
 		setSelectedAnswer(option)
 	}
-
-	useEffect(() => {
-		console.log(grade, subject)
-		loadStoredQuiz().then(() => {
-			setIsLoading(false)
-			// quizQuestions.length > 0 ? null : fetchQuizQuestions()
-		})
-	}, [])
 
 	const handleNextQuestion = () => {
 		if (selectedAnswer === quizQuestions[currentQuestion].correct_answer) {
@@ -40,18 +54,11 @@ export default function QuizScreen() {
 			setCurrentQuestion(currentQuestion + 1)
 			setSelectedAnswer(null)
 		} else {
-			// router.push(
-			// 	`/result?score=${score + 1}&total=${quizQuestions.length}`
-			// )
+			router.push('/results')
 		}
 	}
 
-	if (isLoading) return <Text>Loading</Text>
-
-	const answers = shuffleArray([
-		quizQuestions[currentQuestion].correct_answer,
-		...quizQuestions[currentQuestion].incorrect_answers,
-	])
+	if (isLoading) return <Text>Loading...</Text>
 
 	return (
 		<View className='flex-1 bg-gray-100 p-12 justify-center'>
@@ -63,7 +70,8 @@ export default function QuizScreen() {
 				{quizQuestions[currentQuestion].question}
 			</Text>
 
-			{answers.map(option => (
+			{/* Render shuffled answers */}
+			{shuffledAnswers.map(option => (
 				<TouchableOpacity
 					key={option}
 					className={`p-4 rounded-lg mb-3 shadow ${
