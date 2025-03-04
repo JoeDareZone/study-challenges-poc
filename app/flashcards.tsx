@@ -1,16 +1,16 @@
+import { Categories } from '@/constants/Categories'
+import { getDifficulty } from '@/helpers/getDifficulty'
 import { useQuiz } from '@/hooks/useQuiz'
+import { updateFlashcard } from '@/utils/flashcardStorage'
 import { router, useLocalSearchParams } from 'expo-router'
 import React, { useEffect } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Text, View } from 'react-native'
 import CardsSwipe from 'react-native-cards-swipe'
 import FlipCard from 'react-native-flip-card'
 import { Rating } from 'ts-fsrs'
-import { updateFlashcard } from '../utils/flashcardStorage'
 
 export default function FlashcardScreen() {
-	// const swiper = useRef<any>(null)
 	const { grade, subject } = useLocalSearchParams()
-	// const [flashcards, setFlashcards] = useState<any[]>([]);
 
 	// useEffect(() => {
 	//     const loadFlashcards = async () => {
@@ -27,15 +27,22 @@ export default function FlashcardScreen() {
 		error,
 		fetchQuizQuestions,
 		loadStoredQuiz,
-	} = useQuiz(19, 'medium')
+	} = useQuiz(
+		Categories[subject as keyof typeof Categories],
+		getDifficulty(grade as string)
+	)
 
 	useEffect(() => {
 		loadStoredQuiz()
 	}, [])
 
+	useEffect(() => {
+		console.log(flashcards)
+	}, [flashcards])
+
 	const handleRating = async (index: number, rating: Rating) => {
 		await updateFlashcard(grade as string, subject as string, index, rating)
-		swiper.current?.swipeTop()
+		// swiper.current?.swipeTop()
 	}
 
 	return (
@@ -46,13 +53,19 @@ export default function FlashcardScreen() {
 					cards={flashcards}
 					cardContainerStyle={{ width: '100%', height: '100%' }}
 					lowerCardZoom={0.6}
+					loop={false}
+					// onSwipeStart={handleSwipe}
+					// onSwipeEnd={handleSwipe}
 					renderCard={card => (
 						<View className='w-full h-full items-center justify-center'>
 							<FlipCard
 								// style={{ width: '100%', height: '100%' }}
 								flipHorizontal={true}
 								flipVertical={false}
-								flip={false}
+								// flip={isFlipped}
+								// onFlipEnd={() => setIsFlipped(prev => !prev)}
+								// flip={isFlipped}
+								// onFlipEnd={() => setIsFlipped(prev => !prev)} // Track flip state
 								alignHeight
 								alignWidth
 							>
@@ -127,10 +140,3 @@ export default function FlashcardScreen() {
 		</View>
 	)
 }
-
-const styles = StyleSheet.create({
-	card: {
-		width: '100%',
-		height: '100%',
-	},
-})

@@ -52,8 +52,12 @@ export const useQuiz = (categoryId: number, difficulty: string) => {
       }));
 
       // Store in AsyncStorage
-      await AsyncStorage.setItem("@quizQuestions", JSON.stringify(formattedQuestions));
-      await AsyncStorage.setItem("@flashcards", JSON.stringify(formattedFlashcards));
+      await AsyncStorage.setItem("@quizQuestions", JSON.stringify(formattedQuestions)).then(() => {
+        console.log('quiz questions stored')
+      });
+      await AsyncStorage.setItem("@flashcards", JSON.stringify(formattedFlashcards)).then(() => {
+        console.log('flashcards stored')
+      });
 
       setQuizQuestions(formattedQuestions);
       setFlashcards(formattedFlashcards);

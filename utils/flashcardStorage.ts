@@ -23,6 +23,7 @@ export const createFlashcard = async (
 	existingFlashcards.push(flashcard)
 
 	await AsyncStorage.setItem(key, JSON.stringify(existingFlashcards))
+	console.log('flashcard created', flashcard)
 }
 
 /**
