@@ -1,0 +1,22 @@
+diff --git a/node_modules/react-native-cards-swipe/src/components/CardsSwipe/index.tsx b/node_modules/react-native-cards-swipe/src/components/CardsSwipe/index.tsx
+index 2282433..c21b5b8 100644
+--- a/node_modules/react-native-cards-swipe/src/components/CardsSwipe/index.tsx
++++ b/node_modules/react-native-cards-swipe/src/components/CardsSwipe/index.tsx
+@@ -16,6 +16,8 @@ import Animated, {
+   withTiming,
+   runOnJS,
+   withDelay,
++  // Extrapolate,
++  Extrapolation
+ } from 'react-native-reanimated';
+ 
+ import SwipePan, { SWIPE_DIRECTION } from '../SwipePan';
+@@ -243,7 +245,7 @@ const CardsSwipe = forwardRef(
+         x.value,
+         [-horizontalThreshold, -0.01, 0, 0.01, horizontalThreshold],
+         [1, lowerCardZoom, lowerCardZoom, lowerCardZoom, 1],
+-        Animated.Extrapolate.CLAMP
++        Extrapolation?.CLAMP ?? 'clamp'
+       );
+ 
+       return {
