@@ -1,7 +1,6 @@
 import { Categories } from '@/constants/Categories'
-import { getDifficulty } from '@/helpers/getDifficulty'
-import { shuffleArray } from '@/helpers/shuffleArray'
 import { useQuiz } from '@/hooks/useQuiz'
+import { getDifficulty, shuffleArray } from '@/utils/helpers'
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import { useEffect, useState } from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
@@ -21,10 +20,6 @@ export default function QuizScreen() {
 		Categories[subject as keyof typeof Categories]
 	)
 
-	const shuffleArray = (array: string[]) => {
-		return array.sort(() => Math.random() - 0.5)
-	}
-
 	useEffect(() => {
 		loadStoredQuiz().then(() => {
 			setIsLoading(false)
@@ -39,7 +34,7 @@ export default function QuizScreen() {
 			])
 			setShuffledAnswers(answers)
 		}
-	}, [currentQuestion, quizQuestions]) 
+	}, [currentQuestion, quizQuestions])
 
 	const handleAnswerSelect = (option: string) => {
 		setSelectedAnswer(option)
@@ -70,7 +65,6 @@ export default function QuizScreen() {
 				{quizQuestions[currentQuestion].question}
 			</Text>
 
-			{/* Render shuffled answers */}
 			{shuffledAnswers.map(option => (
 				<TouchableOpacity
 					key={option}

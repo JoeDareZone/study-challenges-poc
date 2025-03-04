@@ -1,5 +1,5 @@
 import { Categories } from '@/constants/Categories'
-import { getDifficulty } from '@/helpers/getDifficulty'
+import { getDifficulty } from '@/utils/helpers'
 import { useQuiz } from '@/hooks/useQuiz'
 import { updateFlashcard } from '@/utils/flashcardStorage'
 import { router, useLocalSearchParams } from 'expo-router'

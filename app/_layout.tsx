@@ -49,7 +49,7 @@ export default function RootLayout() {
 						options={{ headerShown: false }}
 					/>
 					<Stack.Screen
-						name='result'
+						name='results'
 						options={{ headerShown: false }}
 					/>
 				</Stack>
