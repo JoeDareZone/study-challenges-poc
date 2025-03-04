@@ -1,10 +1,10 @@
 import { Categories } from '@/constants/Categories'
-import { getDifficulty } from '@/utils/helpers'
 import { useQuiz } from '@/hooks/useQuiz'
 import { updateFlashcard } from '@/utils/flashcardStorage'
+import { getDifficulty } from '@/utils/helpers'
 import { router, useLocalSearchParams } from 'expo-router'
 import React, { useEffect } from 'react'
-import { Text, View } from 'react-native'
+import { ActivityIndicator, Text, View } from 'react-native'
 import CardsSwipe from 'react-native-cards-swipe'
 import FlipCard from 'react-native-flip-card'
 import { Rating } from 'ts-fsrs'
@@ -30,19 +30,34 @@ export default function FlashcardScreen() {
 		getDifficulty(grade as string),
 		Categories[subject as keyof typeof Categories]
 	)
-	
 
 	useEffect(() => {
-		loadStoredQuiz().then(() => {
-			console.log(quizQuestions)
-			quizQuestions.length > 0 ? null : fetchQuizQuestions()	
+		loadStoredQuiz().then(res => {
+			if (res) {
+				console.log('Quiz questions loaded from storage')
+			} else {
+				console.log('No quiz, exists, fetching quiz questions')
+				fetchQuizQuestions()
+			}
 		})
 	}, [])
+
+	useEffect(() => {
+		console.log(quizQuestions)
+	}, [quizQuestions])
 
 	const handleRating = async (index: number, rating: Rating) => {
 		await updateFlashcard(grade as string, subject as string, index, rating)
 		// swiper.current?.swipeTop()
 	}
+
+	if (loading)
+		return (
+			<ActivityIndicator
+				size='large'
+				className='flex-1 items-center justify-center'
+			/>
+		)
 
 	return (
 		<View className='flex-1 items-center justify-center px-4 py-24'>

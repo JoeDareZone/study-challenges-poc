@@ -6,7 +6,7 @@ export default function SubjectScreen() {
 	const router = useRouter()
 	const { grade } = useGlobalSearchParams()
 
-	const subjects = ['Math', 'Science', 'History', 'English']
+	const subjects = ['Math', 'Science', 'History', 'Computers']
 
 	return (
 		<View className='flex-1 bg-gray-100 p-5'>

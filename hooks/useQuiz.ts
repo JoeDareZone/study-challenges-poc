@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 interface QuizQuestion {
 	question: string
@@ -16,29 +16,40 @@ export const useQuiz = (difficulty: string, categoryId: number) => {
 	const [loading, setLoading] = useState<boolean>(false)
 	const [error, setError] = useState<string | null>(null)
 
+	useEffect(() => {
+		console.log('qiuz questions inside hook', quizQuestions)
+	}, [quizQuestions])
+
 	const fetchQuizQuestions = async () => {
 		setLoading(true)
 		setError(null)
 
+		const url = `${API_URL}?amount=10&difficulty=${difficulty}&category=${categoryId}&type=multiple&encode=url3986`
+		console.log('url', url)
+
 		try {
+			console.log('fetching quiz questions')
 			const response = await fetch(
+				// 'https://opentdb.com/api.php?amount=10'
+				// `${API_URL}?amount=10&difficulty=${difficulty}&category=${categoryId}&type=multiple&encode=url3986`
 				`${API_URL}?amount=10&difficulty=${difficulty}&category=${categoryId}&type=multiple&encode=url3986`
 			)
 			const data = await response.json()
 
 			if (!data.results) throw new Error('No questions found')
 
+			console.log('quiz questions fetched', data.results)
+
 			const formattedQuestions: QuizQuestion[] = data.results.map(
 				(q: QuizQuestion) => ({
 					question: decodeURIComponent(q.question),
 					correct_answer: decodeURIComponent(q.correct_answer),
-					incorrect_answers: q.incorrect_answers.map(decodeURIComponent),
+					incorrect_answers:
+						q.incorrect_answers.map(decodeURIComponent),
 					category: q.category,
 					difficulty: q.difficulty,
 				})
 			)
-
-			console.log(formattedQuestions)
 
 			const storeQuizQuestions = async (
 				formattedQuestions: QuizQuestion[],
@@ -46,17 +57,19 @@ export const useQuiz = (difficulty: string, categoryId: number) => {
 				categoryId: number
 			) => {
 				try {
+					console.log('storing quiz questions')
 					const storageKey = `@quizQuestions-${difficulty}-${categoryId}`
 
 					await AsyncStorage.setItem(
 						storageKey,
 						JSON.stringify(formattedQuestions)
-					).then(() => {
-						console.log('Quiz questions stored')
-					})
+					)
+
+					console.log('quiz questions stored')
 
 					setQuizQuestions(formattedQuestions)
 				} catch (err) {
+					console.log('error storing quiz questions', err)
 					setError(
 						err instanceof Error ? err.message : 'An error occurred'
 					)
@@ -74,14 +87,29 @@ export const useQuiz = (difficulty: string, categoryId: number) => {
 	}
 
 	const loadStoredQuiz = async () => {
+		setLoading(true)
 		try {
 			const storedQuiz = await AsyncStorage.getItem(
 				`@quizQuestions-${difficulty}-${categoryId}`
 			)
+			if (!storedQuiz) throw new Error('No quiz data found')
 
-			if (storedQuiz) setQuizQuestions(JSON.parse(storedQuiz))
+			const parsedQuiz = JSON.parse(storedQuiz)
+
+			if (!Array.isArray(parsedQuiz) || parsedQuiz.length === 0)
+				return false
+
+			setQuizQuestions(parsedQuiz)
+			return true
 		} catch (err) {
-			setError('Failed to load stored data')
+			setError(
+				err instanceof Error
+					? err.message
+					: 'Failed to load stored data'
+			)
+			return false
+		} finally {
+			setLoading(false)
 		}
 	}
 
