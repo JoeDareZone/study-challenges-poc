@@ -22,7 +22,6 @@ export default function FlashcardScreen() {
 
 	const {
 		quizQuestions,
-		flashcards,
 		loading,
 		error,
 		fetchQuizQuestions,
@@ -36,10 +35,6 @@ export default function FlashcardScreen() {
 		loadStoredQuiz()
 	}, [])
 
-	useEffect(() => {
-		console.log(flashcards)
-	}, [flashcards])
-
 	const handleRating = async (index: number, rating: Rating) => {
 		await updateFlashcard(grade as string, subject as string, index, rating)
 		// swiper.current?.swipeTop()
@@ -47,10 +42,10 @@ export default function FlashcardScreen() {
 
 	return (
 		<View className='flex-1 items-center justify-center px-4 py-24'>
-			{flashcards.length > 0 ? (
+			{quizQuestions.length > 0 ? (
 				<CardsSwipe
 					// ref={swiper}
-					cards={flashcards}
+					cards={quizQuestions}
 					cardContainerStyle={{ width: '100%', height: '100%' }}
 					lowerCardZoom={0.6}
 					loop={false}
@@ -76,17 +71,10 @@ export default function FlashcardScreen() {
 								</View>
 								<View className='w-full h-full items-center justify-center bg-white rounded-2xl shadow-sm p-5'>
 									<Text className='text-2xl font-bold'>
-										{card.answer}
+										{card.correct_answer}
 									</Text>
 								</View>
 							</FlipCard>
-						</View>
-					)}
-					renderNoMoreCard={() => (
-						<View className='w-full h-full items-center justify-center'>
-							<Text className='text-2xl font-bold'>
-								No more cards
-							</Text>
 						</View>
 					)}
 					renderYep={() => (
