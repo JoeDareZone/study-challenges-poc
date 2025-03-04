@@ -22,22 +22,23 @@ export const useQuiz = (difficulty: string, categoryId: number) => {
 
 		try {
 			const response = await fetch(
-				`${API_URL}?amount=10&difficulty=${difficulty}&category=${categoryId}&type=multiple`
+				`${API_URL}?amount=10&difficulty=${difficulty}&category=${categoryId}&type=multiple&encode=url3986`
 			)
 			const data = await response.json()
 
 			if (!data.results) throw new Error('No questions found')
 
-			// Process questions for quiz
 			const formattedQuestions: QuizQuestion[] = data.results.map(
-				(q: any) => ({
-					question: q.question,
-					correct_answer: q.correct_answer,
-					incorrect_answers: q.incorrect_answers,
+				(q: QuizQuestion) => ({
+					question: decodeURIComponent(q.question),
+					correct_answer: decodeURIComponent(q.correct_answer),
+					incorrect_answers: q.incorrect_answers.map(decodeURIComponent),
 					category: q.category,
 					difficulty: q.difficulty,
 				})
 			)
+
+			console.log(formattedQuestions)
 
 			const storeQuizQuestions = async (
 				formattedQuestions: QuizQuestion[],
@@ -45,10 +46,8 @@ export const useQuiz = (difficulty: string, categoryId: number) => {
 				categoryId: number
 			) => {
 				try {
-					// Dynamically generate the key for AsyncStorage based on grade and subject
 					const storageKey = `@quizQuestions-${difficulty}-${categoryId}`
 
-					// Store the quiz questions in AsyncStorage
 					await AsyncStorage.setItem(
 						storageKey,
 						JSON.stringify(formattedQuestions)
@@ -56,7 +55,6 @@ export const useQuiz = (difficulty: string, categoryId: number) => {
 						console.log('Quiz questions stored')
 					})
 
-					// Optionally, you can update your state with the stored questions
 					setQuizQuestions(formattedQuestions)
 				} catch (err) {
 					setError(
@@ -75,7 +73,6 @@ export const useQuiz = (difficulty: string, categoryId: number) => {
 		}
 	}
 
-	// Retrieve stored quiz questions
 	const loadStoredQuiz = async () => {
 		try {
 			const storedQuiz = await AsyncStorage.getItem(

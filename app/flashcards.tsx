@@ -30,10 +30,12 @@ export default function FlashcardScreen() {
 		getDifficulty(grade as string),
 		Categories[subject as keyof typeof Categories]
 	)
+	
 
 	useEffect(() => {
 		loadStoredQuiz().then(() => {
-			// quizQuestions.length > 0 ? null : fetchQuizQuestions()
+			console.log(quizQuestions)
+			quizQuestions.length > 0 ? null : fetchQuizQuestions()	
 		})
 	}, [])
 
@@ -46,6 +48,7 @@ export default function FlashcardScreen() {
 		<View className='flex-1 items-center justify-center px-4 py-24'>
 			{quizQuestions.length > 0 ? (
 				<CardsSwipe
+					key={quizQuestions.length}
 					// ref={swiper}
 					cards={quizQuestions}
 					cardContainerStyle={{ width: '100%', height: '100%' }}
