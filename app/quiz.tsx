@@ -21,9 +21,7 @@ export default function QuizScreen() {
 	)
 
 	useEffect(() => {
-		loadStoredQuiz().then(() => {
-			setIsLoading(false)
-		})
+		loadStoredQuiz().then(() => setIsLoading(false))
 	}, [])
 
 	useEffect(() => {
@@ -38,13 +36,13 @@ export default function QuizScreen() {
 
 	const handleAnswerSelect = (option: string) => {
 		setSelectedAnswer(option)
+
+		if (option === quizQuestions[currentQuestion].correct_answer) {
+			setScore(score + 1)
+		}
 	}
 
 	const handleNextQuestion = () => {
-		if (selectedAnswer === quizQuestions[currentQuestion].correct_answer) {
-			setScore(score + 1)
-		}
-
 		if (currentQuestion < quizQuestions.length - 1) {
 			setCurrentQuestion(currentQuestion + 1)
 			setSelectedAnswer(null)
@@ -69,14 +67,27 @@ export default function QuizScreen() {
 				<TouchableOpacity
 					key={option}
 					className={`p-4 rounded-lg mb-3 shadow ${
-						selectedAnswer === option ? 'bg-blue-500' : 'bg-white'
+						selectedAnswer
+							? option ===
+							  quizQuestions[currentQuestion].correct_answer
+								? 'bg-green-500'
+								: selectedAnswer === option
+								? 'bg-red-500'
+								: 'bg-white'
+							: 'bg-white'
 					}`}
 					onPress={() => handleAnswerSelect(option)}
+					disabled={selectedAnswer !== null}
 				>
 					<Text
 						className={`text-lg font-semibold ${
-							selectedAnswer === option
-								? 'text-white'
+							selectedAnswer
+								? option ===
+								  quizQuestions[currentQuestion].correct_answer
+									? 'text-white'
+									: selectedAnswer === option
+									? 'text-white'
+									: 'text-gray-800'
 								: 'text-gray-800'
 						}`}
 					>
@@ -84,6 +95,16 @@ export default function QuizScreen() {
 					</Text>
 				</TouchableOpacity>
 			))}
+
+			{/* {selectedAnswer !== null && (
+				<Text
+					className={`text-lg font-bold text-center mt-2 h-6 ${
+						isAnswerCorrect ? 'text-green-600' : 'text-red-600'
+					}`}
+				>
+					{isAnswerCorrect ? 'Correct!' : 'Wrong!'}
+				</Text>
+			)} */}
 
 			<TouchableOpacity
 				className={`p-4 rounded-lg mt-4 ${

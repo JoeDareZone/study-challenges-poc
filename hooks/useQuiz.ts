@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 interface QuizQuestion {
 	question: string
@@ -16,22 +16,12 @@ export const useQuiz = (difficulty: string, categoryId: number) => {
 	const [loading, setLoading] = useState<boolean>(false)
 	const [error, setError] = useState<string | null>(null)
 
-	useEffect(() => {
-		console.log('qiuz questions inside hook', quizQuestions)
-	}, [quizQuestions])
-
 	const fetchQuizQuestions = async () => {
 		setLoading(true)
 		setError(null)
 
-		const url = `${API_URL}?amount=10&difficulty=${difficulty}&category=${categoryId}&type=multiple&encode=url3986`
-		console.log('url', url)
-
 		try {
-			console.log('fetching quiz questions')
 			const response = await fetch(
-				// 'https://opentdb.com/api.php?amount=10'
-				// `${API_URL}?amount=10&difficulty=${difficulty}&category=${categoryId}&type=multiple&encode=url3986`
 				`${API_URL}?amount=10&difficulty=${difficulty}&category=${categoryId}&type=multiple&encode=url3986`
 			)
 			const data = await response.json()

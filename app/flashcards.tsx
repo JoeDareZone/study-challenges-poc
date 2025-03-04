@@ -1,24 +1,15 @@
 import { Categories } from '@/constants/Categories'
 import { useQuiz } from '@/hooks/useQuiz'
-import { updateFlashcard } from '@/utils/flashcardStorage'
 import { getDifficulty } from '@/utils/helpers'
 import { router, useLocalSearchParams } from 'expo-router'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ActivityIndicator, Text, View } from 'react-native'
 import CardsSwipe from 'react-native-cards-swipe'
 import FlipCard from 'react-native-flip-card'
-import { Rating } from 'ts-fsrs'
 
 export default function FlashcardScreen() {
 	const { grade, subject } = useLocalSearchParams()
-
-	// useEffect(() => {
-	//     const loadFlashcards = async () => {
-	//         const data = await getFlashcards(grade as string, subject as string);
-	//         setFlashcards(data);
-	//     };
-	//     loadFlashcards();
-	// }, []);
+	const [isFlipped, setIsFlipped] = useState(false)
 
 	const {
 		quizQuestions,
@@ -42,14 +33,30 @@ export default function FlashcardScreen() {
 		})
 	}, [])
 
-	useEffect(() => {
-		console.log(quizQuestions)
-	}, [quizQuestions])
-
-	const handleRating = async (index: number, rating: Rating) => {
-		await updateFlashcard(grade as string, subject as string, index, rating)
-		// swiper.current?.swipeTop()
+	const handleSwipe = () => {
+		setIsFlipped(false)
 	}
+
+	// const handleFlip = () => {
+	// 	setIsFlipped(!isFlipped)
+	// }
+
+	// useEffect(() => {
+	//     const loadFlashcards = async () => {
+	//         const data = await getFlashcards(grade as string, subject as string);
+	//         setFlashcards(data);
+	//     };
+	//     loadFlashcards();
+	// }, []);
+
+	// const handleRating = async (index: number, rating: Rating) => {
+	// 	await updateFlashcard(grade as string, subject as string, index, rating)
+	// 	// swiper.current?.swipeTop()
+	// }
+
+	useEffect(() => {
+		console.log('isFlipped', isFlipped)
+	}, [isFlipped])
 
 	if (loading)
 		return (
@@ -64,23 +71,20 @@ export default function FlashcardScreen() {
 			{quizQuestions.length > 0 ? (
 				<CardsSwipe
 					key={quizQuestions.length}
-					// ref={swiper}
 					cards={quizQuestions}
 					cardContainerStyle={{ width: '100%', height: '100%' }}
 					lowerCardZoom={0.6}
 					loop={false}
-					// onSwipeStart={handleSwipe}
-					// onSwipeEnd={handleSwipe}
+					onSwipeStart={handleSwipe}
 					renderCard={card => (
-						<View className='w-full h-full items-center justify-center'>
+						<View
+							className='w-full h-full items-center justify-center'
+							key={`${card.question}`}
+						>
 							<FlipCard
-								// style={{ width: '100%', height: '100%' }}
 								flipHorizontal={true}
 								flipVertical={false}
-								// flip={isFlipped}
-								// onFlipEnd={() => setIsFlipped(prev => !prev)}
-								// flip={isFlipped}
-								// onFlipEnd={() => setIsFlipped(prev => !prev)} // Track flip state
+								flip={isFlipped}
 								alignHeight
 								alignWidth
 							>
