@@ -11,7 +11,7 @@ import {
 
 export default function HomeScreen() {
 	const router = useRouter()
-	const { challenges, loading, resetAllChallenges } = useAllChallenges()
+	const { challenges, loading } = useAllChallenges()
 	const { xp, loading: xpLoading } = useXP()
 
 	const today = new Date().toISOString().split('T')[0]
@@ -104,15 +104,6 @@ export default function HomeScreen() {
 					}
 				/>
 			)}
-
-			<TouchableOpacity
-				className='bg-red-500 p-4 rounded-lg mt-5 mb-20'
-				onPress={() => resetAllChallenges()}
-			>
-				<Text className='text-white text-lg font-bold text-center'>
-					Reset All Challenges
-				</Text>
-			</TouchableOpacity>
 		</View>
 	)
 }
