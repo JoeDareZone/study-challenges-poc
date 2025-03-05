@@ -7,15 +7,14 @@ import FlipCard from 'react-native-flip-card'
 
 export default function FlashcardScreen() {
 	const { grade, subject } = useLocalSearchParams()
-	const [isFlipped, setIsFlipped] = useState(false)
-
 	const {
 		challenge,
 		loading,
-		error,
 		fetchNewChallengeQuestions,
 		loadStoredChallenge,
 	} = useChallenge(grade as string, subject as string)
+
+	const [isFlipped, setIsFlipped] = useState(false)
 
 	useEffect(() => {
 		loadStoredChallenge().then(res => {

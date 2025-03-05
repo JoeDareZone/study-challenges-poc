@@ -19,7 +19,7 @@ export default function GradesScreen() {
 
 	return (
 		<View className='flex-1 bg-gray-100 p-5'>
-			<Text className='text-2xl font-bold mb-4'>Select Your Grade</Text>
+			<Text className='text-2xl font-bold mb-5'>Select Your Grade</Text>
 
 			{filteredGrades.map(grade => (
 				<TouchableOpacity

@@ -6,17 +6,16 @@ import { Text, TouchableOpacity, View } from 'react-native'
 
 export default function QuizScreen() {
 	const { grade, subject } = useLocalSearchParams()
+	const { challenge, loadStoredChallenge, loading } = useChallenge(
+		grade as string,
+		subject as string
+	)
 	const router = useRouter()
 
 	const [currentQuestion, setCurrentQuestion] = useState(0)
 	const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null)
 	const [score, setScore] = useState(0)
 	const [shuffledAnswers, setShuffledAnswers] = useState<string[]>([])
-
-	const { challenge, loadStoredChallenge, loading } = useChallenge(
-		grade as string,
-		subject as string
-	)
 
 	useEffect(() => {
 		loadStoredChallenge()
@@ -25,30 +24,30 @@ export default function QuizScreen() {
 	useEffect(() => {
 		if (!challenge) return
 
+		const currentQuiz = challenge.quizzes[currentQuestion]
 		const answers = shuffleArray([
-			challenge.quizzes[currentQuestion].correct_answer,
-			...challenge.quizzes[currentQuestion].incorrect_answers,
+			currentQuiz.correct_answer,
+			...currentQuiz.incorrect_answers,
 		])
 		setShuffledAnswers(answers)
-	}, [currentQuestion, challenge])
+	}, [challenge, currentQuestion])
 
 	const handleAnswerSelect = (option: string) => {
 		setSelectedAnswer(option)
-
 		if (option === challenge?.quizzes[currentQuestion].correct_answer) {
-			setScore(score + 1)
+			setScore(prevScore => prevScore + 1)
 		}
 	}
 
 	if (loading || !challenge) return <Text>Loading...</Text>
 
 	const handleNextQuestion = () => {
-		if (currentQuestion < challenge?.quizzes.length - 1) {
-			setCurrentQuestion(currentQuestion + 1)
+		if (currentQuestion < challenge.quizzes.length - 1) {
+			setCurrentQuestion(prev => prev + 1)
 			setSelectedAnswer(null)
 		} else {
 			router.push(
-				`/results?grade=${grade}&subject=${subject}&score=${score}&totalQuestions=${challenge?.quizzes.length}`
+				`/results?grade=${grade}&subject=${subject}&score=${score}&totalQuestions=${challenge.quizzes.length}`
 			)
 		}
 	}
@@ -56,12 +55,11 @@ export default function QuizScreen() {
 	return (
 		<View className='flex-1 bg-gray-100 p-12 justify-center'>
 			<Text className='text-lg font-semibold text-gray-600 mb-2'>
-				Question {currentQuestion + 1} of{' '}
-				{challenge?.quizzes.length ?? 0}
+				Question {currentQuestion + 1} of {challenge.quizzes.length}
 			</Text>
 
 			<Text className='text-2xl font-bold mb-6'>
-				{challenge?.quizzes[currentQuestion].question}
+				{challenge.quizzes[currentQuestion].question}
 			</Text>
 
 			{shuffledAnswers.map(option => (
@@ -70,7 +68,7 @@ export default function QuizScreen() {
 					className={`p-4 rounded-lg mb-3 shadow ${
 						selectedAnswer
 							? option ===
-							  challenge?.quizzes[currentQuestion].correct_answer
+							  challenge.quizzes[currentQuestion].correct_answer
 								? 'bg-green-500'
 								: selectedAnswer === option
 								? 'bg-red-500'
@@ -84,7 +82,7 @@ export default function QuizScreen() {
 						className={`text-lg font-semibold ${
 							selectedAnswer
 								? option ===
-								  challenge?.quizzes[currentQuestion]
+								  challenge.quizzes[currentQuestion]
 										.correct_answer
 									? 'text-white'
 									: selectedAnswer === option
@@ -116,7 +114,7 @@ export default function QuizScreen() {
 				disabled={!selectedAnswer}
 			>
 				<Text className='text-lg font-bold text-white text-center'>
-					{currentQuestion === challenge?.quizzes.length - 1
+					{currentQuestion === challenge.quizzes.length - 1
 						? 'Finish'
 						: 'Next'}
 				</Text>

@@ -59,6 +59,7 @@ export default function HomeScreen() {
 				<FlatList
 					data={todaysChallenges}
 					keyExtractor={item => item.id}
+					contentContainerStyle={{ paddingTop: 20 }}
 					renderItem={({ item }) => (
 						<View className='bg-white p-4 rounded-lg mb-4 shadow'>
 							<Text className='text-lg font-semibold mb-2'>
@@ -104,7 +105,7 @@ export default function HomeScreen() {
 						</View>
 					)}
 					ListEmptyComponent={
-						<Text className='text-gray-500 text-center mt-4'>
+						<Text className='text-gray-500 text-center mt-4 mb-5'>
 							No active challenges. Start one below!
 						</Text>
 					}
@@ -118,14 +119,16 @@ export default function HomeScreen() {
 									Start New Challenge
 								</Text>
 							</TouchableOpacity>
-							<TouchableOpacity
-								className='bg-red-500 p-4 rounded-lg mt-5'
-								onPress={() => handleResetAllChallenges()}
-							>
-								<Text className='text-white text-lg font-bold text-center'>
-									Reset All Challenges
-								</Text>
-							</TouchableOpacity>
+							{challenges.length > 0 && (
+								<TouchableOpacity
+									className='bg-red-500 p-4 rounded-lg mt-5'
+									onPress={() => handleResetAllChallenges()}
+								>
+									<Text className='text-white text-lg font-bold text-center'>
+										Reset All Challenges
+									</Text>
+								</TouchableOpacity>
+							)}
 						</>
 					}
 				/>
