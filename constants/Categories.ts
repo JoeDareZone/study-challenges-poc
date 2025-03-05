@@ -1,5 +1,5 @@
 export const Categories = {
-	Maths: 19,
+	Geography: 22,
 	Science: 17,
 	History: 23,
 	Computers: 18,

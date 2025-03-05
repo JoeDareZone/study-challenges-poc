@@ -1,4 +1,5 @@
 import { useAllChallenges } from '@/hooks/useAllChallenges'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useRouter } from 'expo-router'
 import {
 	ActivityIndicator,
@@ -10,7 +11,7 @@ import {
 
 export default function HomeScreen() {
 	const router = useRouter()
-	const { challenges, loading } = useAllChallenges()
+	const { challenges, loading, resetAllChallenges } = useAllChallenges()
 
 	return (
 		<View className='flex-1 bg-gray-100 p-5'>
@@ -57,6 +58,14 @@ export default function HomeScreen() {
 					}
 				/>
 			)}
+			<TouchableOpacity
+				className='bg-red-500 p-4 rounded-lg mt-5 mb-20'
+				onPress={() => resetAllChallenges()}
+			>
+				<Text className='text-white text-lg font-bold text-center'>
+					Reset All Challenges
+				</Text>
+			</TouchableOpacity>
 		</View>
 	)
 }

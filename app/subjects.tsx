@@ -8,7 +8,7 @@ export default function SubjectScreen() {
 	const { grade } = useGlobalSearchParams()
 	const { challenges } = useAllChallenges()
 
-	const subjects = ['Math', 'Science', 'History', 'Computers'].filter(
+	const subjects = ['Geography', 'Science', 'History', 'Computers'].filter(
 		subject => !challenges.some(challenge => challenge.subject === subject)
 	)
 

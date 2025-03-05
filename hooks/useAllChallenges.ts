@@ -39,10 +39,20 @@ export const useAllChallenges = () => {
 		}
 	}
 
+	const resetAllChallenges = async () => {
+		try {
+			await AsyncStorage.clear()
+			console.log('AsyncStorage cleared!')
+		} catch (error) {
+			console.error('Error clearing AsyncStorage:', error)
+		}
+	}
+
 	return {
 		challenges,
 		loading,
 		error,
 		getAllStoredChallenges,
+		resetAllChallenges,
 	}
 }
