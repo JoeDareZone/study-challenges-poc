@@ -47,7 +47,9 @@ export default function QuizScreen() {
 			setCurrentQuestion(currentQuestion + 1)
 			setSelectedAnswer(null)
 		} else {
-			router.push('/results')
+			router.push(
+				`/results?grade=${grade}&subject=${subject}&score=${score}&totalQuestions=${quizQuestions.length}`
+			)
 		}
 	}
 

@@ -54,10 +54,6 @@ export default function FlashcardScreen() {
 	// 	// swiper.current?.swipeTop()
 	// }
 
-	useEffect(() => {
-		console.log('isFlipped', isFlipped)
-	}, [isFlipped])
-
 	if (loading)
 		return (
 			<ActivityIndicator
@@ -70,18 +66,15 @@ export default function FlashcardScreen() {
 		<View className='flex-1 items-center justify-center px-4 py-24'>
 			{quizQuestions.length > 0 ? (
 				<CardsSwipe
-					key={quizQuestions.length}
 					cards={quizQuestions}
 					cardContainerStyle={{ width: '100%', height: '100%' }}
 					lowerCardZoom={0.6}
 					loop={false}
 					onSwipeStart={handleSwipe}
 					renderCard={card => (
-						<View
-							className='w-full h-full items-center justify-center'
-							key={`${card.question}`}
-						>
+						<View className='w-full h-full items-center justify-center'>
 							<FlipCard
+								key={`${card.question}-${isFlipped}`}
 								flipHorizontal={true}
 								flipVertical={false}
 								flip={isFlipped}

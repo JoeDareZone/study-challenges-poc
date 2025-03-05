@@ -1,16 +1,34 @@
 diff --git a/node_modules/react-native-cards-swipe/src/components/CardsSwipe/index.tsx b/node_modules/react-native-cards-swipe/src/components/CardsSwipe/index.tsx
-index 2282433..c21b5b8 100644
+index 2282433..e9e352a 100644
 --- a/node_modules/react-native-cards-swipe/src/components/CardsSwipe/index.tsx
 +++ b/node_modules/react-native-cards-swipe/src/components/CardsSwipe/index.tsx
-@@ -16,6 +16,8 @@ import Animated, {
-   withTiming,
-   runOnJS,
-   withDelay,
+@@ -7,19 +7,21 @@ import React, {
+   useRef,
+   useState,
+ } from 'react';
+-import { Dimensions, View, StyleProp, ViewStyle } from 'react-native';
++import { Dimensions, StyleProp, View, ViewStyle } from 'react-native';
+ import Animated, {
 +  // Extrapolate,
-+  Extrapolation
++  Extrapolation,
+   interpolate,
++  runOnJS,
+   useAnimatedStyle,
+   useSharedValue,
+-  withSpring,
+-  withTiming,
+-  runOnJS,
+   withDelay,
++  withSpring,
++  withTiming
  } from 'react-native-reanimated';
  
- import SwipePan, { SWIPE_DIRECTION } from '../SwipePan';
+-import SwipePan, { SWIPE_DIRECTION } from '../SwipePan';
+ import CardWrap from '../CardWrap';
++import SwipePan, { SWIPE_DIRECTION } from '../SwipePan';
+ 
+ import styles from './styles';
+ 
 @@ -243,7 +245,7 @@ const CardsSwipe = forwardRef(
          x.value,
          [-horizontalThreshold, -0.01, 0, 0.01, horizontalThreshold],
@@ -20,3 +38,34 @@ index 2282433..c21b5b8 100644
        );
  
        return {
+@@ -268,12 +270,12 @@ const CardsSwipe = forwardRef(
+       >
+         {secondIndex >= 0 && cards.length > secondIndex ? (
+           <CardWrap
+-            {...{
+-              key: secondIndex,
+-              pointerEvents: 'none',
+-              style: lowerStyle,
+-              cardContainerStyle,
++            key={secondIndex}
++            style={{
++              ...lowerStyle,
++              pointerEvents: "none"
+             }}
++            cardContainerStyle={cardContainerStyle}
+           >
+             {renderCard(cards[secondIndex])}
+           </CardWrap>
+@@ -291,10 +293,8 @@ const CardsSwipe = forwardRef(
+             }}
+           >
+             <CardWrap
+-              {...{
+-                style,
+-                cardContainerStyle,
+-              }}
++              style={style}
++              cardContainerStyle={cardContainerStyle}
+             >
+               {renderCard(cards[index])}
+               <Animated.View style={styles.overlay} pointerEvents={'none'}>
