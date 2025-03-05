@@ -15,3 +15,13 @@ export const getToday = () => {
 	const today = new Date()
 	return today.toISOString().split('T')[0]
 }
+
+export const getCategoryIdFromSubject = (subject: string) => {
+	const categoryMapping: { [key: string]: number } = {
+		Geography: 22,
+		Science: 17,
+		History: 23,
+		Computers: 18,
+	}
+	return categoryMapping[subject]
+}

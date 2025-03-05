@@ -1,6 +1,5 @@
-import { Categories } from '@/constants/Categories'
 import { Challenge, QuizQuestion } from '@/types/types'
-import { getDifficulty } from '@/utils/helpers'
+import { getCategoryIdFromSubject, getDifficulty } from '@/utils/helpers'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useState } from 'react'
 
@@ -22,9 +21,9 @@ export const useChallenge = (grade?: string, subject?: string) => {
 			const response = await fetch(
 				`${API_URL}?amount=10&difficulty=${getDifficulty(
 					grade as string
-				)}&category=${
-					Categories[subject as keyof typeof Categories]
-				}&type=multiple&encode=url3986`
+				)}&category=${getCategoryIdFromSubject(
+					subject as string
+				)}&type=multiple&encode=url3986`
 			)
 			const data = await response.json()
 
