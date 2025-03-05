@@ -1,4 +1,4 @@
-import { Grades } from '@/constants/constants'
+import { Grades, Subjects } from '@/constants/constants'
 import { useAllChallenges } from '@/hooks/useAllChallenges'
 import { useRouter } from 'expo-router'
 import { Text, TouchableOpacity, View } from 'react-native'
@@ -7,9 +7,15 @@ export default function GradesScreen() {
 	const router = useRouter()
 	const { challenges } = useAllChallenges()
 
-	const filteredGrades = Grades.filter(
-		grade => !challenges.some(challenge => challenge.grade === grade)
-	)
+	const filteredGrades = Grades.filter(grade => {
+		const gradeChallenges = challenges.filter(
+			challenge => challenge.grade === grade
+		)
+
+		return !Subjects.every(subject =>
+			gradeChallenges.some(challenge => challenge.subject === subject)
+		)
+	})
 
 	return (
 		<View className='flex-1 bg-gray-100 p-5'>
