@@ -46,9 +46,9 @@ export const useChallenge = (grade: string, subject: string) => {
 				subject,
 				grade,
 				createdAt: new Date().toISOString(),
-				progress: 0,
 				totalQuizzes: 10,
 				quizzes: formattedQuestions,
+				completed: false,
 			}
 
 			const storageKey = `@challenge-${subject}-${grade}`
@@ -111,6 +111,14 @@ export const useChallenge = (grade: string, subject: string) => {
 		}
 	}
 
+	const completeChallenge = async () => {
+		if (!challenge) return
+		const updatedChallenge = { ...challenge, completed: true }
+		const storageKey = `@challenge-${challenge.subject}-${challenge.grade}`
+		await AsyncStorage.setItem(storageKey, JSON.stringify(updatedChallenge))
+		setChallenge(updatedChallenge)
+	}
+
 	return {
 		challenge,
 		loading,
@@ -118,5 +126,6 @@ export const useChallenge = (grade: string, subject: string) => {
 		fetchNewChallengeQuestions,
 		loadStoredChallenge,
 		addNewQuizzesToChallenge,
+		completeChallenge,
 	}
 }

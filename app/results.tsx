@@ -1,14 +1,30 @@
+import { useChallenge } from '@/hooks/useChallenge'
+import { useXP } from '@/hooks/useXP'
 import { useLocalSearchParams, useRouter } from 'expo-router'
+import { useEffect } from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
 
 export default function ResultScreen() {
 	const router = useRouter()
 	const { score, totalQuestions, grade, subject } = useLocalSearchParams()
+	const { completeChallenge } = useChallenge(
+		grade as string,
+		subject as string
+	)
+	const { addXP } = useXP()
 
+	const xpEarned = 50
 	const percentage = ((Number(score) / Number(totalQuestions)) * 100).toFixed(
 		1
 	)
 	const isPassed = Number(percentage) >= 80
+
+	useEffect(() => {
+		if (isPassed) {
+			completeChallenge()
+			addXP(xpEarned)
+		}
+	}, [])
 
 	return (
 		<View className='flex-1 bg-gray-100 px-6 py-10 items-center justify-center'>
@@ -38,9 +54,13 @@ export default function ResultScreen() {
 				</Text>
 			</View>
 
-			<Text
-				className={`text-2xl font-bold mb-8`}
-			>
+			{isPassed && (
+				<Text className='text-xl font-bold text-blue-500 mt-4'>
+					You gained {xpEarned} XP!
+				</Text>
+			)}
+
+			<Text className={`text-2xl font-bold mb-8`}>
 				{isPassed
 					? 'Amazing job! 🎯'
 					: 'Keep practicing and try again! 🔄'}

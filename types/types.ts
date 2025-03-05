@@ -11,7 +11,7 @@ export interface Challenge {
 	subject: string
 	grade: string
 	createdAt: string
-	progress: number
 	totalQuizzes: number
 	quizzes: QuizQuestion[]
+	completed: boolean
 }

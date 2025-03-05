@@ -43,6 +43,7 @@ export const useAllChallenges = () => {
 		try {
 			await AsyncStorage.clear()
 			console.log('AsyncStorage cleared!')
+			getAllStoredChallenges()
 		} catch (error) {
 			console.error('Error clearing AsyncStorage:', error)
 		}
