@@ -7,7 +7,7 @@ import { Text, TouchableOpacity, View } from 'react-native'
 export default function ResultScreen() {
 	const router = useRouter()
 	const { score, totalQuestions, grade, subject } = useLocalSearchParams()
-	const { completeChallenge } = useChallenge(
+	const { completeChallenge, challenge, loadStoredChallenge } = useChallenge(
 		grade as string,
 		subject as string
 	)
@@ -18,6 +18,10 @@ export default function ResultScreen() {
 		1
 	)
 	const isPassed = Number(percentage) >= 80
+
+	useEffect(() => {
+		loadStoredChallenge()
+	}, [])
 
 	useEffect(() => {
 		if (isPassed) {

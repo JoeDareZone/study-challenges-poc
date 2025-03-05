@@ -9,7 +9,7 @@ const generateId = () =>
 
 const API_URL = 'https://opentdb.com/api.php'
 
-export const useChallenge = (grade: string, subject: string) => {
+export const useChallenge = (grade?: string, subject?: string) => {
 	const [challenge, setChallenge] = useState<Challenge | null>(null)
 	const [loading, setLoading] = useState<boolean>(false)
 	const [error, setError] = useState<string | null>(null)
@@ -40,6 +40,8 @@ export const useChallenge = (grade: string, subject: string) => {
 					difficulty: q.difficulty,
 				})
 			)
+
+			if (!grade || !subject) throw new Error('No grade or subject')
 
 			const newChallenge: Challenge = {
 				id: generateId(),
