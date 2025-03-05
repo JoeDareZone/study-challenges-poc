@@ -1,60 +1,38 @@
-import { Categories } from '@/constants/Categories'
-import { useQuiz } from '@/hooks/useQuiz'
-import { getDifficulty } from '@/utils/helpers'
+import { useChallenge } from '@/hooks/useChallenge'
 import { router, useLocalSearchParams } from 'expo-router'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { ActivityIndicator, Text, View } from 'react-native'
 import CardsSwipe from 'react-native-cards-swipe'
 import FlipCard from 'react-native-flip-card'
 
 export default function FlashcardScreen() {
 	const { grade, subject } = useLocalSearchParams()
-	const [isFlipped, setIsFlipped] = useState(false)
 
 	const {
-		quizQuestions,
+		challenge,
 		loading,
 		error,
-		fetchQuizQuestions,
-		loadStoredQuiz,
-	} = useQuiz(
-		getDifficulty(grade as string),
-		Categories[subject as keyof typeof Categories]
-	)
+		fetchNewChallengeQuestions,
+		loadStoredChallenge,
+	} = useChallenge(subject as string, grade as string)
 
 	useEffect(() => {
-		loadStoredQuiz().then(res => {
+		loadStoredChallenge().then(res => {
 			if (res) {
 				console.log('Quiz questions loaded from storage')
 			} else {
 				console.log('No quiz, exists, fetching quiz questions')
-				fetchQuizQuestions()
+				fetchNewChallengeQuestions()
 			}
 		})
 	}, [])
-
-	const handleSwipe = () => {
-		setIsFlipped(false)
-	}
-
-	// const handleFlip = () => {
-	// 	setIsFlipped(!isFlipped)
-	// }
-
-	// useEffect(() => {
-	//     const loadFlashcards = async () => {
-	//         const data = await getFlashcards(grade as string, subject as string);
-	//         setFlashcards(data);
-	//     };
-	//     loadFlashcards();
-	// }, []);
 
 	// const handleRating = async (index: number, rating: Rating) => {
 	// 	await updateFlashcard(grade as string, subject as string, index, rating)
 	// 	// swiper.current?.swipeTop()
 	// }
 
-	if (loading)
+	if (loading || !challenge)
 		return (
 			<ActivityIndicator
 				size='large'
@@ -64,20 +42,17 @@ export default function FlashcardScreen() {
 
 	return (
 		<View className='flex-1 items-center justify-center px-4 py-24'>
-			{quizQuestions.length > 0 ? (
+			{challenge.quizzes.length > 0 ? (
 				<CardsSwipe
-					cards={quizQuestions}
+					cards={challenge.quizzes}
 					cardContainerStyle={{ width: '100%', height: '100%' }}
 					lowerCardZoom={0.6}
 					loop={false}
-					onSwipeStart={handleSwipe}
 					renderCard={card => (
 						<View className='w-full h-full items-center justify-center'>
 							<FlipCard
-								key={`${card.question}-${isFlipped}`}
 								flipHorizontal={true}
 								flipVertical={false}
-								flip={isFlipped}
 								alignHeight
 								alignWidth
 							>
