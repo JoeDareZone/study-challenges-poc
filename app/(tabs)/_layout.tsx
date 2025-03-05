@@ -40,7 +40,7 @@ export default function TabLayout() {
 					tabBarIcon: ({ color }) => (
 						<IconSymbol
 							size={28}
-							name='gearshape.fill'
+							name='paperplane.fill'
 							color={color}
 						/>
 					),

@@ -25,7 +25,7 @@ export default function RootLayout() {
 			<SafeAreaView className='flex-1 bg-gray-100'>
 				<Stack>
 					<Stack.Screen
-						name='(tabs)'
+						name='index'
 						options={{ headerShown: false }}
 					/>
 					<Stack.Screen

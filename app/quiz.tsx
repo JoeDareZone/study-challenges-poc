@@ -13,7 +13,14 @@ export default function QuizScreen() {
 	const [score, setScore] = useState(0)
 	const [shuffledAnswers, setShuffledAnswers] = useState<string[]>([])
 
-	const { challenge, loading } = useChallenge()
+	const { challenge, loadStoredChallenge, loading } = useChallenge(
+		grade as string,
+		subject as string
+	)
+
+	useEffect(() => {
+		loadStoredChallenge()
+	}, [])
 
 	useEffect(() => {
 		if (!challenge) return

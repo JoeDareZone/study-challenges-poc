@@ -1,8 +1,11 @@
 import { useAllChallenges } from '@/hooks/useAllChallenges'
 import { useXP } from '@/hooks/useXP'
+import { getToday } from '@/utils/helpers'
 import { useRouter } from 'expo-router'
+import React from 'react'
 import {
 	ActivityIndicator,
+	Alert,
 	FlatList,
 	Text,
 	TouchableOpacity,
@@ -11,14 +14,27 @@ import {
 
 export default function HomeScreen() {
 	const router = useRouter()
-	const { challenges, loading } = useAllChallenges()
+	const {
+		challenges,
+		loading: challengesLoading,
+		resetAllChallenges,
+	} = useAllChallenges()
 	const { xp, loading: xpLoading } = useXP()
 
-	const today = new Date().toISOString().split('T')[0]
-
 	const todaysChallenges = challenges.filter(challenge =>
-		challenge.createdAt.startsWith(today)
+		challenge.createdAt.startsWith(getToday())
 	)
+
+	const handleResetAllChallenges = () => {
+		Alert.alert('Are you sure?', 'This action cannot be undone', [
+			{ text: 'Cancel', style: 'cancel' },
+			{
+				text: 'Reset',
+				style: 'destructive',
+				onPress: () => resetAllChallenges(),
+			},
+		])
+	}
 
 	return (
 		<View className='flex-1 bg-gray-100 p-5'>
@@ -26,7 +42,7 @@ export default function HomeScreen() {
 				{xpLoading ? (
 					<ActivityIndicator color='white' />
 				) : (
-					<Text className='text-sm font-bold text-white'>
+					<Text className='text-sm font-bold text-white text-center'>
 						XP: {xp}
 					</Text>
 				)}
@@ -34,7 +50,7 @@ export default function HomeScreen() {
 
 			<Text className='text-2xl font-bold mb-4'>Study Challenges</Text>
 
-			{loading ? (
+			{challengesLoading ? (
 				<ActivityIndicator
 					size='large'
 					className='flex-1 justify-center items-center'
@@ -93,14 +109,24 @@ export default function HomeScreen() {
 						</Text>
 					}
 					ListFooterComponent={
-						<TouchableOpacity
-							className='bg-blue-500 p-4 rounded-lg mt-5 mb-20'
-							onPress={() => router.push('/grades')}
-						>
-							<Text className='text-white text-lg font-bold text-center'>
-								Start New Challenge
-							</Text>
-						</TouchableOpacity>
+						<>
+							<TouchableOpacity
+								className='bg-blue-500 p-4 rounded-lg mt-5'
+								onPress={() => router.push('/grades')}
+							>
+								<Text className='text-white text-lg font-bold text-center'>
+									Start New Challenge
+								</Text>
+							</TouchableOpacity>
+							<TouchableOpacity
+								className='bg-red-500 p-4 rounded-lg mt-5'
+								onPress={() => handleResetAllChallenges()}
+							>
+								<Text className='text-white text-lg font-bold text-center'>
+									Reset All Challenges
+								</Text>
+							</TouchableOpacity>
+						</>
 					}
 				/>
 			)}

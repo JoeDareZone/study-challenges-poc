@@ -7,7 +7,7 @@ import { Text, TouchableOpacity, View } from 'react-native'
 export default function ResultScreen() {
 	const router = useRouter()
 	const { score, totalQuestions, grade, subject } = useLocalSearchParams()
-	const { completeChallenge, challenge, loadStoredChallenge } = useChallenge(
+	const { completeChallenge, loadStoredChallenge } = useChallenge(
 		grade as string,
 		subject as string
 	)
