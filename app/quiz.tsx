@@ -14,25 +14,26 @@ export default function QuizScreen() {
 	const [isLoading, setIsLoading] = useState(true)
 	const [shuffledAnswers, setShuffledAnswers] = useState<string[]>([])
 
-	const { challenge, loadStoredChallenge } = useChallenge(
-		subject as string,
-		grade as string
-	)
+	console.log('grade, subject', grade, subject)
 
-	if (!challenge) return <Text>No challenge found</Text>
+	const { challenge, loadStoredChallenge } = useChallenge(
+		grade as string,
+		subject as string
+	)
 
 	useEffect(() => {
 		loadStoredChallenge().then(() => setIsLoading(false))
 	}, [])
 
 	useEffect(() => {
-		if (challenge?.quizzes.length > 0) {
-			const answers = shuffleArray([
-				challenge.quizzes[currentQuestion].correct_answer,
-				...challenge.quizzes[currentQuestion].incorrect_answers,
-			])
-			setShuffledAnswers(answers)
-		}
+		if (!challenge) return
+		if (currentQuestion >= challenge.quizzes.length) return
+
+		const answers = shuffleArray([
+			challenge.quizzes[currentQuestion].correct_answer,
+			...challenge.quizzes[currentQuestion].incorrect_answers,
+		])
+		setShuffledAnswers(answers)
 	}, [currentQuestion, challenge])
 
 	const handleAnswerSelect = (option: string) => {
@@ -42,6 +43,8 @@ export default function QuizScreen() {
 			setScore(score + 1)
 		}
 	}
+
+	if (!challenge) return <Text>No challenge found</Text>
 
 	const handleNextQuestion = () => {
 		if (currentQuestion < challenge?.quizzes.length - 1) {

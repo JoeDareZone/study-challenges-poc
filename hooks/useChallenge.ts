@@ -9,7 +9,7 @@ const generateId = () =>
 
 const API_URL = 'https://opentdb.com/api.php'
 
-export const useChallenge = (subject: string, grade: string) => {
+export const useChallenge = (grade: string, subject: string) => {
 	const [challenge, setChallenge] = useState<Challenge | null>(null)
 	const [loading, setLoading] = useState<boolean>(false)
 	const [error, setError] = useState<string | null>(null)

@@ -1,12 +1,13 @@
 import { useChallenge } from '@/hooks/useChallenge'
 import { router, useLocalSearchParams } from 'expo-router'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ActivityIndicator, Text, View } from 'react-native'
 import CardsSwipe from 'react-native-cards-swipe'
 import FlipCard from 'react-native-flip-card'
 
 export default function FlashcardScreen() {
 	const { grade, subject } = useLocalSearchParams()
+	const [isFlipped, setIsFlipped] = useState(false)
 
 	const {
 		challenge,
@@ -14,7 +15,7 @@ export default function FlashcardScreen() {
 		error,
 		fetchNewChallengeQuestions,
 		loadStoredChallenge,
-	} = useChallenge(subject as string, grade as string)
+	} = useChallenge(grade as string, subject as string)
 
 	useEffect(() => {
 		loadStoredChallenge().then(res => {
@@ -26,7 +27,6 @@ export default function FlashcardScreen() {
 			}
 		})
 	}, [])
-
 	// const handleRating = async (index: number, rating: Rating) => {
 	// 	await updateFlashcard(grade as string, subject as string, index, rating)
 	// 	// swiper.current?.swipeTop()
@@ -48,11 +48,14 @@ export default function FlashcardScreen() {
 					cardContainerStyle={{ width: '100%', height: '100%' }}
 					lowerCardZoom={0.6}
 					loop={false}
+					onSwipeStart={() => setIsFlipped(false)}
 					renderCard={card => (
 						<View className='w-full h-full items-center justify-center'>
 							<FlipCard
+								key={`${card.question}-${isFlipped}`}
 								flipHorizontal={true}
 								flipVertical={false}
+								flip={isFlipped}
 								alignHeight
 								alignWidth
 							>
