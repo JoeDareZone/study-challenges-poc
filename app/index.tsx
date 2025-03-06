@@ -100,7 +100,7 @@ export default function HomeScreen() {
 										<Text className='text-lg font-bold text-gray-800 mb-1'>
 											Daily Challenge:{' '}
 										</Text>
-										<Text className='text-lg font-bold text-green-600'>
+										<Text className='text-lg font-bold text-orange-500'>
 											Complete the Quiz
 										</Text>
 									</View>
