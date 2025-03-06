@@ -15,3 +15,4 @@ export interface Challenge {
 	quizzes: QuizQuestion[]
 	completed: boolean
 }
+
