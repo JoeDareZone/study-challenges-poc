@@ -113,19 +113,11 @@ export const useChallenge = (grade?: string, subject?: string) => {
 	}
 
 	const completeChallenge = async () => {
-		if (!challenge) {
-			console.log('no challenge found')
-			return
-		}
+		if (!challenge) return
 		const updatedChallenge = { ...challenge, completed: true }
 		const storageKey = `@challenge-${challenge.subject}-${challenge.grade}`
 		await AsyncStorage.setItem(storageKey, JSON.stringify(updatedChallenge))
-			.then(() => {
-				console.log('challenge completed and upated')
-			})
-			.catch(err => {
-				console.error('Error completing challenge:', err)
-			})
+
 		setChallenge(updatedChallenge)
 	}
 
