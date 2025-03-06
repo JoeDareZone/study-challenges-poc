@@ -83,8 +83,11 @@ export default function HomeScreen() {
 								</View>
 							</View>
 							<View className='flex-row justify-between mb-4'>
-								<Text className='text-gray-700 pt-1'>
-									{item.subject} - {item.grade}
+								<Text className='text-lg font-medium text-gray-700'>
+									📚 <Text>{item.subject}</Text> | 🎓 Grade:{' '}
+									<Text className='font-bold'>
+										{item.grade[item.grade.length - 1]}
+									</Text>
 								</Text>
 								<Text
 									className={`text-sm font-semibold ${
