@@ -26,10 +26,6 @@ export default function FlashcardScreen() {
 			}
 		})
 	}, [])
-	// const handleRating = async (index: number, rating: Rating) => {
-	// 	await updateFlashcard(grade as string, subject as string, index, rating)
-	// 	// swiper.current?.swipeTop()
-	// }
 
 	if (loading || !challenge)
 		return (
@@ -41,35 +37,32 @@ export default function FlashcardScreen() {
 
 	return (
 		<View className='flex-1 bg-gradient-to-b from-blue-50 to-gray-100 p-6'>
-			{/* Header */}
 			<Text className='text-3xl font-bold text-center text-gray-800 mb-6'>
 				{subject} - {grade}
 			</Text>
 
-			{/* Cards Swipe */}
 			<View className='flex-1'>
 				<CardsSwipe
 					cards={challenge.quizzes}
 					cardContainerStyle={{ width: '100%', height: '100%' }}
-					  lowerCardZoom={0.6}
+					lowerCardZoom={0.6}
 					loop={false}
 					onSwipeStart={() => setIsFlipped(false)}
 					renderCard={card => (
-						<View className='w-full h-full items-center justify-center py-20'>
+						<View className='w-full h-full items-center justify-center py-20 '>
 							<FlipCard
+								style={{ width: '90%', minWidth: '90%' }}
 								key={`${card.question}-${isFlipped}`}
 								flipHorizontal={true}
 								flipVertical={false}
 								flip={isFlipped}
-								alignHeight
-								alignWidth
 							>
-								<View className='h-full w-full items-center justify-center bg-white rounded-2xl shadow-md p-6'>
+								<View className='h-full justify-center items-center bg-white rounded-2xl shadow-md p-6'>
 									<Text className='text-2xl font-bold text-gray-900 text-center'>
 										{card.question}
 									</Text>
 								</View>
-								<View className='h-full w-full items-center justify-center bg-white rounded-2xl shadow-md p-6'>
+								<View className='h-full justify-center items-center bg-white rounded-2xl shadow-md p-6'>
 									<Text className='text-2xl font-bold text-gray-900 text-center'>
 										{card.correct_answer}
 									</Text>
@@ -97,7 +90,6 @@ export default function FlashcardScreen() {
 				/>
 			</View>
 
-			{/* Footer / Instruction */}
 			<Text className='text-center text-base text-gray-600 mt-6'>
 				Swipe cards to review your flashcards.
 			</Text>
