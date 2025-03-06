@@ -16,3 +16,7 @@ export interface Challenge {
 	completed: boolean
 }
 
+export interface StreakData {
+	streak: number
+	lastCompleted: string | null
+}

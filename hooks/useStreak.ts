@@ -1,11 +1,7 @@
+import { StreakData } from '@/types/types'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
-
-interface StreakData {
-	streak: number
-	lastCompleted: string
-}
 
 export const useStreak = () => {
 	const [streak, setStreak] = useState<number>(0)
