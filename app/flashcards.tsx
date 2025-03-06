@@ -49,7 +49,7 @@ export default function FlashcardScreen() {
 					loop={false}
 					onSwipeStart={() => setIsFlipped(false)}
 					renderCard={card => (
-						<View className='w-full h-full items-center justify-center py-20 '>
+						<View className='w-full h-full items-center justify-center py-12 '>
 							<FlipCard
 								style={{ width: '90%', minWidth: '90%' }}
 								key={`${card.question}-${isFlipped}`}
@@ -71,14 +71,14 @@ export default function FlashcardScreen() {
 						</View>
 					)}
 					renderYep={() => (
-						<View className='border-4 border-green-500 rounded-lg p-2 mt-5 ml-10 transform rotate-22'>
+						<View className='border-4 border-green-500 rounded-lg p-2 mt-20 ml-10 transform rotate-22'>
 							<Text className='text-4xl text-green-500 font-bold'>
 								YEP
 							</Text>
 						</View>
 					)}
 					renderNope={() => (
-						<View className='border-4 border-red-500 rounded-lg p-2 mt-6 mr-10 transform rotate-22'>
+						<View className='border-4 border-red-500 rounded-lg p-2 mt-20 mr-10 transform rotate-22'>
 							<Text className='text-4xl text-red-500 font-bold'>
 								NOPE
 							</Text>
@@ -90,9 +90,23 @@ export default function FlashcardScreen() {
 				/>
 			</View>
 
-			<Text className='text-center text-base text-gray-600 mt-6'>
-				Swipe cards to review your flashcards.
+			<Text className='text-center text-lg text-gray-500 mb-4'>
+				Tap to flip
 			</Text>
+			<View className='mb-4 flex-row justify-between items-center px-4'>
+				<View className='flex-row items-center'>
+					<Text className='text-2xl text-gray-600'>←</Text>
+					<Text className='text-base text-red-600 ml-2'>
+						Swipe left for incorrect
+					</Text>
+				</View>
+				<View className='flex-row items-center'>
+					<Text className='text-base text-green-600 mr-2'>
+						Swipe right for correct
+					</Text>
+					<Text className='text-2xl text-gray-600'>→</Text>
+				</View>
+			</View>
 		</View>
 	)
 }
