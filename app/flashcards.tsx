@@ -40,16 +40,22 @@ export default function FlashcardScreen() {
 		)
 
 	return (
-		<View className='flex-1 items-center justify-center px-4 py-24'>
-			{challenge.quizzes.length > 0 ? (
+		<View className='flex-1 bg-gradient-to-b from-blue-50 to-gray-100 p-6'>
+			{/* Header */}
+			<Text className='text-3xl font-bold text-center text-gray-800 mb-6'>
+				{subject} - {grade}
+			</Text>
+
+			{/* Cards Swipe */}
+			<View className='flex-1'>
 				<CardsSwipe
 					cards={challenge.quizzes}
 					cardContainerStyle={{ width: '100%', height: '100%' }}
-					lowerCardZoom={0.6}
+					  lowerCardZoom={0.6}
 					loop={false}
 					onSwipeStart={() => setIsFlipped(false)}
 					renderCard={card => (
-						<View className='w-full h-full items-center justify-center'>
+						<View className='w-full h-full items-center justify-center py-20'>
 							<FlipCard
 								key={`${card.question}-${isFlipped}`}
 								flipHorizontal={true}
@@ -58,13 +64,13 @@ export default function FlashcardScreen() {
 								alignHeight
 								alignWidth
 							>
-								<View className='min-w-28 w-full h-full items-center justify-center bg-white rounded-2xl shadow-sm p-5'>
-									<Text className='text-2xl font-bold'>
+								<View className='h-full w-full items-center justify-center bg-white rounded-2xl shadow-md p-6'>
+									<Text className='text-2xl font-bold text-gray-900 text-center'>
 										{card.question}
 									</Text>
 								</View>
-								<View className='w-full h-full items-center justify-center bg-white rounded-2xl shadow-sm p-5'>
-									<Text className='text-2xl font-bold'>
+								<View className='h-full w-full items-center justify-center bg-white rounded-2xl shadow-md p-6'>
+									<Text className='text-2xl font-bold text-gray-900 text-center'>
 										{card.correct_answer}
 									</Text>
 								</View>
@@ -89,36 +95,12 @@ export default function FlashcardScreen() {
 						router.push(`/quiz?grade=${grade}&subject=${subject}`)
 					}}
 				/>
-			) : (
-				<Text className='text-xl'>No flashcards available</Text>
-			)}
+			</View>
 
-			{/* <View className="flex-row mt-5">
-                <TouchableOpacity
-                    className="bg-red-500 p-3 rounded-lg mr-3"
-                    onPress={() => handleRating(0, Rating.Again)}
-                >
-                    <Text className="text-white">Again</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    className="bg-yellow-500 p-3 rounded-lg mr-3"
-                    onPress={() => handleRating(0, Rating.Hard)}
-                >
-                    <Text className="text-white">Hard</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    className="bg-green-500 p-3 rounded-lg mr-3"
-                    onPress={() => handleRating(0, Rating.Good)}
-                >
-                    <Text className="text-white">Good</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    className="bg-blue-500 p-3 rounded-lg"
-                    onPress={() => handleRating(0, Rating.Easy)}
-                >
-                    <Text className="text-white">Easy</Text>
-                </TouchableOpacity>
-            </View> */}
+			{/* Footer / Instruction */}
+			<Text className='text-center text-base text-gray-600 mt-6'>
+				Swipe cards to review your flashcards.
+			</Text>
 		</View>
 	)
 }
