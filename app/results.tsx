@@ -1,4 +1,5 @@
 import { useChallenge } from '@/hooks/useChallenge'
+import { useStreak } from '@/hooks/useStreak'
 import { useXP } from '@/hooks/useXP'
 import { getPercentage } from '@/utils/helpers'
 import { useLocalSearchParams, useRouter } from 'expo-router'
@@ -13,6 +14,7 @@ export default function ResultScreen() {
 		subject as string
 	)
 	const { addXP } = useXP()
+	const { updateStreak } = useStreak()
 	const resultsHandled = useRef(false)
 
 	const xpEarned = 50
@@ -33,6 +35,7 @@ export default function ResultScreen() {
 			if (isPassed) {
 				await completeChallenge()
 				await addXP(xpEarned)
+				await updateStreak()
 				resultsHandled.current = true
 			}
 		}

@@ -1,4 +1,6 @@
+import { IconSymbol } from '@/components/ui/IconSymbol.ios'
 import { useAllChallenges } from '@/hooks/useAllChallenges'
+import { useStreak } from '@/hooks/useStreak'
 import { useXP } from '@/hooks/useXP'
 import { getToday } from '@/utils/helpers'
 import { useRouter } from 'expo-router'
@@ -20,6 +22,7 @@ export default function HomeScreen() {
 		resetAllChallenges,
 	} = useAllChallenges()
 	const { xp, loading: xpLoading } = useXP()
+	const { streak, loading: streakLoading } = useStreak()
 
 	const todaysChallenges = challenges.filter(challenge =>
 		challenge.createdAt.startsWith(getToday())
@@ -38,14 +41,40 @@ export default function HomeScreen() {
 
 	return (
 		<View className='flex-1 bg-gray-100 p-5'>
-			<View className='absolute top-5 right-5 bg-blue-500 rounded  px-2 py-1 min-w-16 '>
-				{xpLoading ? (
-					<ActivityIndicator color='white' />
-				) : (
-					<Text className='text-sm font-bold text-white text-center'>
-						XP: {xp}
-					</Text>
-				)}
+			<View className='absolute top-5 right-5 flex-row gap-x-4'>
+				<View>
+					{streakLoading ? (
+						<Text>Loading streak...</Text>
+					) : (
+						<View className='relative rounded-full'>
+							<IconSymbol
+								name='flame.fill'
+								size={36}
+								color='red'
+							/>
+							<View className='absolute left-1/2 -translate-x-1/2 top-[20px] -translate-y-1/2 flex-row items-center justify-center'>
+								{streakLoading ? (
+									<Text className='text-sm font-bold text-white'>
+										...
+									</Text>
+								) : (
+									<Text className='text-md font-bold text-white bg-[#FF0000] rounded-full py-[3px] px-[2px]'>
+										{streak}
+									</Text>
+								)}
+							</View>
+						</View>
+					)}
+				</View>
+				<View className=' bg-blue-500 rounded px-2 py-1 min-w-16 justify-center'>
+					{xpLoading ? (
+						<ActivityIndicator color='white' />
+					) : (
+						<Text className='text-sm font-bold text-white text-center'>
+							XP: {xp}
+						</Text>
+					)}
+				</View>
 			</View>
 
 			<Text className='text-2xl font-bold mb-4'>Study Challenges</Text>
