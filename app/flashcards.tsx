@@ -58,7 +58,7 @@ export default function FlashcardScreen() {
 								alignHeight
 								alignWidth
 							>
-								<View className='w-full h-full items-center justify-center bg-white rounded-2xl shadow-sm p-5'>
+								<View className='min-w-28 w-full h-full items-center justify-center bg-white rounded-2xl shadow-sm p-5'>
 									<Text className='text-2xl font-bold'>
 										{card.question}
 									</Text>

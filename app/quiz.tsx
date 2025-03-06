@@ -53,19 +53,26 @@ export default function QuizScreen() {
 	}
 
 	return (
-		<View className='flex-1 bg-gray-100 p-12 justify-center'>
-			<Text className='text-lg font-semibold text-gray-600 mb-2'>
-				Question {currentQuestion + 1} of {challenge.quizzes.length}
-			</Text>
-
-			<Text className='text-2xl font-bold min-h-36'>
-				{challenge.quizzes[currentQuestion].question}
-			</Text>
-			<View className=''>
+		<View className='flex-1 bg-gradient-to-b from-blue-50 to-gray-100 p-8 justify-between'>
+			<View>
+				<Text className='text-center text-xl font-bold text-gray-800 mb-4'>
+					Question {currentQuestion + 1} of {challenge.quizzes.length}
+				</Text>
+				<View className='absolute top-12 left-0 right-0'>
+					<View className='bg-white rounded-xl shadow-md p-6'>
+						<Text className='text-2xl font-bold text-gray-900 text-center'>
+							{challenge.quizzes[currentQuestion].question}
+						</Text>
+					</View>
+				</View>
+			</View>
+			<View className='space-y-4 mt-16'>
 				{shuffledAnswers.map(option => (
 					<TouchableOpacity
 						key={option}
-						className={`p-6 rounded-lg mb-6 shadow ${
+						onPress={() => handleAnswerSelect(option)}
+						disabled={selectedAnswer !== null}
+						className={`p-4 rounded-lg shadow-md mb-6 ${
 							selectedAnswer
 								? option ===
 								  challenge.quizzes[currentQuestion]
@@ -76,11 +83,9 @@ export default function QuizScreen() {
 									: 'bg-white'
 								: 'bg-white'
 						}`}
-						onPress={() => handleAnswerSelect(option)}
-						disabled={selectedAnswer !== null}
 					>
 						<Text
-							className={`text-lg font-semibold ${
+							className={`text-center text-lg font-semibold ${
 								selectedAnswer
 									? option ===
 									  challenge.quizzes[currentQuestion]
@@ -98,24 +103,14 @@ export default function QuizScreen() {
 				))}
 			</View>
 
-			{/* {selectedAnswer !== null && (
-				<Text
-					className={`text-lg font-bold text-center mt-2 h-6 ${
-						isAnswerCorrect ? 'text-green-600' : 'text-red-600'
-					}`}
-				>
-					{isAnswerCorrect ? 'Correct!' : 'Wrong!'}
-				</Text>
-			)} */}
-
 			<TouchableOpacity
-				className={`p-4 rounded-lg mt-16 ${
-					selectedAnswer ? 'bg-green-500' : 'bg-gray-300'
-				}`}
 				onPress={handleNextQuestion}
 				disabled={!selectedAnswer}
+				className={`mt-10 p-4 rounded-xl shadow-lg ${
+					selectedAnswer ? 'bg-green-500' : 'bg-gray-300'
+				}`}
 			>
-				<Text className='text-lg font-bold text-white text-center'>
+				<Text className='text-center text-lg font-bold text-white'>
 					{currentQuestion === challenge.quizzes.length - 1
 						? 'Finish'
 						: 'Next'}
