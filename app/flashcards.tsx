@@ -17,11 +17,8 @@ export default function FlashcardScreen() {
 	const [isFlipped, setIsFlipped] = useState(false)
 
 	useEffect(() => {
-		loadStoredChallenge().then(res => {
-			if (res) {
-				console.log('Quiz questions loaded from storage')
-			} else {
-				console.log('No quiz, exists, fetching quiz questions')
+		loadStoredChallenge().then(challenge => {
+			if (!challenge) {
 				fetchNewChallengeQuestions()
 			}
 		})

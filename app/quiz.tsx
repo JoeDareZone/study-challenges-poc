@@ -1,7 +1,7 @@
 import { useChallenge } from '@/hooks/useChallenge'
 import { shuffleArray } from '@/utils/helpers'
 import { useLocalSearchParams, useRouter } from 'expo-router'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Text, TouchableOpacity, useWindowDimensions, View } from 'react-native'
 
 export default function QuizScreen() {
@@ -15,43 +15,41 @@ export default function QuizScreen() {
 	const [currentQuestion, setCurrentQuestion] = useState(0)
 	const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null)
 	const [score, setScore] = useState(0)
-	const [shuffledAnswers, setShuffledAnswers] = useState<string[]>([])
 	const isSmallScreen = useWindowDimensions().height < 768
 
 	useEffect(() => {
 		loadStoredChallenge()
 	}, [])
 
-	useEffect(() => {
-		if (!challenge) return
+	const currentQuiz = challenge?.quizzes[currentQuestion]
 
-		const currentQuiz = challenge.quizzes[currentQuestion]
-		const answers = shuffleArray([
+	const shuffledAnswers = useMemo(() => {
+		if (!currentQuiz) return []
+		return shuffleArray([
 			currentQuiz.correct_answer,
 			...currentQuiz.incorrect_answers,
 		])
-		setShuffledAnswers(answers)
-	}, [challenge, currentQuestion])
+	}, [currentQuiz])
 
 	const handleAnswerSelect = (option: string) => {
 		setSelectedAnswer(option)
-		if (option === challenge?.quizzes[currentQuestion].correct_answer) {
-			setScore(prevScore => prevScore + 1)
+		if (option === currentQuiz?.correct_answer) {
+			setScore(prev => prev + 1)
 		}
 	}
 
-	if (loading || !challenge) return <Text>Loading...</Text>
-
 	const handleNextQuestion = () => {
-		if (currentQuestion < challenge.quizzes.length - 1) {
+		if (currentQuestion < (challenge?.quizzes.length ?? 0) - 1) {
 			setCurrentQuestion(prev => prev + 1)
 			setSelectedAnswer(null)
 		} else {
 			router.push(
-				`/results?grade=${grade}&subject=${subject}&score=${score}&totalQuestions=${challenge.quizzes.length}`
+				`/results?grade=${grade}&subject=${subject}&score=${score}&totalQuestions=${challenge?.quizzes.length}`
 			)
 		}
 	}
+
+	if (loading || !challenge) return <Text>Loading...</Text>
 
 	return (
 		<View className='flex-1 bg-gradient-to-b from-blue-50 to-gray-100 p-8 justify-between'>
