@@ -94,22 +94,27 @@ export default function HomeScreen() {
 					}}
 					renderItem={({ item }) => (
 						<View className='bg-white rounded-xl shadow-md p-6 mb-6'>
-							<View className='flex-row justify-between items-center mb-2'>
-								<Text className='text-lg font-bold text-gray-800'>
-									Daily Challenge
-								</Text>
-								<View className='flex-row gap-x-2'>
-									{item.completed && (
-										<Text className='text-sm font-semibold text-green-600'>
-											Completed
+							<View className='justify-between mb-2'>
+								<View className='flex-row gap-x-2 justify-between'>
+									<View>
+										<Text className='text-lg font-bold text-gray-800 mb-1'>
+											Daily Challenge:{' '}
 										</Text>
-									)}
-									{!item.completed && (
-										<Text className='text-sm font-semibold text-red-600'>
-											Not Completed
+										<Text className='text-lg font-bold text-green-600'>
+											Complete the Quiz
 										</Text>
-									)}
+									</View>
+									<Text
+										className={`text-sm font-semibold self-start ${
+											item.completed
+												? 'text-white bg-gray-600'
+												: 'text-gray-600 bg-gray-200'
+										} rounded-md px-2 py-1`}
+									>
+										50 XP
+									</Text>
 								</View>
+								<View className='flex-row gap-x-2 items-center justify-between'></View>
 							</View>
 							<View className='flex-row justify-between mb-4'>
 								<Text className='text-lg font-medium text-gray-700'>
@@ -117,15 +122,6 @@ export default function HomeScreen() {
 									<Text className='font-bold'>
 										{item.grade[item.grade.length - 1]}
 									</Text>
-								</Text>
-								<Text
-									className={`text-sm font-semibold ${
-										item.completed
-											? 'text-white bg-gray-600'
-											: 'text-gray-600 bg-gray-200'
-									} rounded-md px-2 py-1`}
-								>
-									50 XP
 								</Text>
 							</View>
 							{item.completed ? (
