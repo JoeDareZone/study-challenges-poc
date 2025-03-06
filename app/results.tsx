@@ -21,27 +21,29 @@ export default function ResultScreen() {
 	const scorePercentage = getPercentage(Number(score), Number(totalQuestions))
 	const isPassed = Number(scorePercentage) >= 80
 
+	const handleChallengeCompletion = async () => {
+		await completeChallenge()
+		await addXP(xpEarned)
+		await updateStreak()
+	}
+
 	useEffect(() => {
 		const handleResults = async () => {
-			if (resultsHandled.current) return
+			if (resultsHandled.current || !isPassed) return
 
-			await loadStoredChallenge()
+			try {
+				await loadStoredChallenge()
+				if (!challenge) return
 
-			if (!challenge) {
-				console.log('Challenge not loaded')
-				return
-			}
-
-			if (isPassed) {
-				await completeChallenge()
-				await addXP(xpEarned)
-				await updateStreak()
+				await handleChallengeCompletion()
 				resultsHandled.current = true
+			} catch (error) {
+				console.error('Error handling results:', error)
 			}
 		}
 
 		handleResults()
-	}, [challenge, isPassed])
+	}, [loadStoredChallenge, handleChallengeCompletion, isPassed, xpEarned])
 
 	return (
 		<View className='flex-1 bg-gray-100 px-6 py-10 items-center justify-center gap-y-4'>

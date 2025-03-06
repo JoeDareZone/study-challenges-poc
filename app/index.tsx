@@ -114,7 +114,6 @@ export default function HomeScreen() {
 										50 XP
 									</Text>
 								</View>
-								<View className='flex-row gap-x-2 items-center justify-between'></View>
 							</View>
 							<View className='flex-row justify-between mb-4'>
 								<Text className='text-lg font-medium text-gray-700'>
