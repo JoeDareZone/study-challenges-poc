@@ -22,13 +22,15 @@ export default function SubjectScreen() {
 				Select Subject for {grade}
 			</Text>
 
-			<View className='flex-1 justify-center'>
+			<View className='flex-1 justify-center px-4'>
 				{filteredSubjects.map(subject => (
 					<TouchableOpacity
 						key={subject}
-						className='bg-white p-6 rounded-xl mb-4 shadow-md'
+						className='bg-white p-6 rounded-xl mb-6 shadow-md'
 						onPress={() =>
-							router.push(`/flashcards?grade=${grade}&subject=${subject}`)
+							router.push(
+								`/flashcards?grade=${grade}&subject=${subject}`
+							)
 						}
 					>
 						<Text className='text-xl font-semibold text-center text-gray-800'>

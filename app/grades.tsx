@@ -23,11 +23,11 @@ export default function GradesScreen() {
 				Select Your Grade
 			</Text>
 
-			<View className='flex-1 justify-center'>
+			<View className='flex-1 justify-center px-4'>
 				{filteredGrades.map(grade => (
 					<TouchableOpacity
 						key={grade}
-						className='bg-white p-6 rounded-xl mb-4 shadow-md'
+						className='bg-white p-6 rounded-xl mb-6 shadow-md'
 						onPress={() => router.push(`/subjects?grade=${grade}`)}
 					>
 						<Text className='text-xl font-semibold text-center text-gray-800'>

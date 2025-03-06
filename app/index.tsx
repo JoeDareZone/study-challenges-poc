@@ -121,7 +121,7 @@ export default function HomeScreen() {
 									</TouchableOpacity>
 
 									<TouchableOpacity
-										className='flex-1 bg-green-500 p-3 rounded-lg'
+										className='flex-1 bg-green-500 p-3 rounded-lg justify-center'
 										onPress={() =>
 											router.push(
 												`/quiz?grade=${item.grade}&subject=${item.subject}`

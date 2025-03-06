@@ -2,7 +2,7 @@ import { useChallenge } from '@/hooks/useChallenge'
 import { shuffleArray } from '@/utils/helpers'
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import { useEffect, useState } from 'react'
-import { Text, TouchableOpacity, View } from 'react-native'
+import { Text, TouchableOpacity, useWindowDimensions, View } from 'react-native'
 
 export default function QuizScreen() {
 	const { grade, subject } = useLocalSearchParams()
@@ -16,6 +16,7 @@ export default function QuizScreen() {
 	const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null)
 	const [score, setScore] = useState(0)
 	const [shuffledAnswers, setShuffledAnswers] = useState<string[]>([])
+	const isSmallScreen = useWindowDimensions().height < 768
 
 	useEffect(() => {
 		loadStoredChallenge()
@@ -55,7 +56,11 @@ export default function QuizScreen() {
 	return (
 		<View className='flex-1 bg-gradient-to-b from-blue-50 to-gray-100 p-8 justify-between'>
 			<View>
-				<Text className='text-center text-xl font-bold text-gray-800 mb-4'>
+				<Text
+					className={`text-center text-xl font-bold text-gray-800 mb-4 ${
+						isSmallScreen && 'min-h-32'
+					}`}
+				>
 					Question {currentQuestion + 1} of {challenge.quizzes.length}
 				</Text>
 				<View className='absolute top-12 left-0 right-0'>
@@ -72,7 +77,7 @@ export default function QuizScreen() {
 						key={option}
 						onPress={() => handleAnswerSelect(option)}
 						disabled={selectedAnswer !== null}
-						className={`p-4 rounded-lg shadow-md mb-6 ${
+						className={`p-6 rounded-lg shadow-md mb-6 ${
 							selectedAnswer
 								? option ===
 								  challenge.quizzes[currentQuestion]
@@ -106,7 +111,7 @@ export default function QuizScreen() {
 			<TouchableOpacity
 				onPress={handleNextQuestion}
 				disabled={!selectedAnswer}
-				className={`mt-10 p-4 rounded-xl shadow-lg ${
+				className={`p-4 rounded-xl shadow-lg ${
 					selectedAnswer ? 'bg-green-500' : 'bg-gray-300'
 				}`}
 			>

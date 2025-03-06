@@ -38,7 +38,7 @@ export default function FlashcardScreen() {
 	return (
 		<View className='flex-1 bg-gradient-to-b from-blue-50 to-gray-100 p-6'>
 			<Text className='text-3xl font-bold text-center text-gray-800 mb-6'>
-				{subject} - {grade}
+				{subject}: {grade}
 			</Text>
 
 			<View className='flex-1'>
@@ -90,21 +90,22 @@ export default function FlashcardScreen() {
 				/>
 			</View>
 
-			<Text className='text-center text-lg text-gray-500 mb-4'>
+			<Text className='text-center text-lg text-gray-500 mb-6'>
 				Tap to flip
 			</Text>
-			<View className='mb-4 flex-row justify-between items-center px-4'>
-				<View className='flex-row items-center'>
-					<Text className='text-2xl text-gray-600'>←</Text>
-					<Text className='text-base text-red-600 ml-2'>
-						Swipe left for incorrect
+			<View className='mb-4 flex-row justify-between items-center px-2'>
+				<View className='flex-1 flex-row items-center flex-wrap'>
+					<Text className='text-xl text-gray-600'>←</Text>
+					<Text className='text-sm text-red-600 ml-1'>
+						Left for incorrect
 					</Text>
 				</View>
-				<View className='flex-row items-center'>
-					<Text className='text-base text-green-600 mr-2'>
-						Swipe right for correct
+				<Text className='text-xl text-gray-600'>Swipe</Text>
+				<View className='flex-1 flex-row items-center justify-end flex-wrap'>
+					<Text className='text-sm text-green-600 mr-1'>
+						Right for correct
 					</Text>
-					<Text className='text-2xl text-gray-600'>→</Text>
+					<Text className='text-xl text-gray-600'>→</Text>
 				</View>
 			</View>
 		</View>
