@@ -58,7 +58,7 @@ export default function QuizScreen() {
 				Question {currentQuestion + 1} of {challenge.quizzes.length}
 			</Text>
 
-			<Text className='text-2xl font-bold min-h-32'>
+			<Text className='text-2xl font-bold min-h-36'>
 				{challenge.quizzes[currentQuestion].question}
 			</Text>
 			<View className=''>
@@ -109,7 +109,7 @@ export default function QuizScreen() {
 			)} */}
 
 			<TouchableOpacity
-				className={`p-4 rounded-lg mt-12 ${
+				className={`p-4 rounded-lg mt-16 ${
 					selectedAnswer ? 'bg-green-500' : 'bg-gray-300'
 				}`}
 				onPress={handleNextQuestion}

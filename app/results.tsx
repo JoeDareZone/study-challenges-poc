@@ -2,32 +2,43 @@ import { useChallenge } from '@/hooks/useChallenge'
 import { useXP } from '@/hooks/useXP'
 import { getPercentage } from '@/utils/helpers'
 import { useLocalSearchParams, useRouter } from 'expo-router'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
 
 export default function ResultScreen() {
 	const router = useRouter()
 	const { score, totalQuestions, grade, subject } = useLocalSearchParams()
-	const { completeChallenge, loadStoredChallenge } = useChallenge(
+	const { completeChallenge, loadStoredChallenge, challenge } = useChallenge(
 		grade as string,
 		subject as string
 	)
 	const { addXP } = useXP()
+	const resultsHandled = useRef(false)
 
 	const xpEarned = 50
 	const scorePercentage = getPercentage(Number(score), Number(totalQuestions))
 	const isPassed = Number(scorePercentage) >= 80
 
 	useEffect(() => {
-		loadStoredChallenge()
-	}, [])
+		const handleResults = async () => {
+			if (resultsHandled.current) return
 
-	useEffect(() => {
-		if (isPassed) {
-			completeChallenge()
-			addXP(xpEarned)
+			await loadStoredChallenge()
+
+			if (!challenge) {
+				console.log('Challenge not loaded')
+				return
+			}
+
+			if (isPassed) {
+				await completeChallenge()
+				await addXP(xpEarned)
+				resultsHandled.current = true
+			}
 		}
-	}, [])
+
+		handleResults()
+	}, [challenge, isPassed])
 
 	return (
 		<View className='flex-1 bg-gray-100 px-6 py-10 items-center justify-center gap-y-4'>

@@ -86,7 +86,13 @@ export default function HomeScreen() {
 								<Text className='text-gray-700 pt-1'>
 									{item.subject} - {item.grade}
 								</Text>
-								<Text className={`text-sm font-semibold ${item.completed ? 'text-white bg-gray-600' : 'text-gray-600 bg-gray-200'} rounded-md px-2 py-1`}>
+								<Text
+									className={`text-sm font-semibold ${
+										item.completed
+											? 'text-white bg-gray-600'
+											: 'text-gray-600 bg-gray-200'
+									} rounded-md px-2 py-1`}
+								>
 									50 XP
 								</Text>
 							</View>
