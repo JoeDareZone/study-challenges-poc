@@ -31,7 +31,7 @@ export default function ResultScreen() {
 	}, [])
 
 	return (
-		<View className='flex-1 bg-gray-100 px-6 py-10 items-center justify-center'>
+		<View className='flex-1 bg-gray-100 px-6 py-10 items-center justify-center gap-y-4'>
 			<Text
 				className={`text-4xl font-extrabold mb-4 ${
 					isPassed ? 'text-green-600' : 'text-red-600'
@@ -75,7 +75,7 @@ export default function ResultScreen() {
 				onPress={() => router.push('/')}
 			>
 				<Text className='text-lg font-bold text-white text-center'>
-					🏠 Home
+					Home
 				</Text>
 			</TouchableOpacity>
 		</View>
