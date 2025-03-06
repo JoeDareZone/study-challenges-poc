@@ -58,43 +58,45 @@ export default function QuizScreen() {
 				Question {currentQuestion + 1} of {challenge.quizzes.length}
 			</Text>
 
-			<Text className='text-2xl font-bold mb-6'>
+			<Text className='text-2xl font-bold min-h-32'>
 				{challenge.quizzes[currentQuestion].question}
 			</Text>
-
-			{shuffledAnswers.map(option => (
-				<TouchableOpacity
-					key={option}
-					className={`p-4 rounded-lg mb-3 shadow ${
-						selectedAnswer
-							? option ===
-							  challenge.quizzes[currentQuestion].correct_answer
-								? 'bg-green-500'
-								: selectedAnswer === option
-								? 'bg-red-500'
-								: 'bg-white'
-							: 'bg-white'
-					}`}
-					onPress={() => handleAnswerSelect(option)}
-					disabled={selectedAnswer !== null}
-				>
-					<Text
-						className={`text-lg font-semibold ${
+			<View className=''>
+				{shuffledAnswers.map(option => (
+					<TouchableOpacity
+						key={option}
+						className={`p-6 rounded-lg mb-6 shadow ${
 							selectedAnswer
 								? option ===
 								  challenge.quizzes[currentQuestion]
 										.correct_answer
-									? 'text-white'
+									? 'bg-green-500'
 									: selectedAnswer === option
-									? 'text-white'
-									: 'text-gray-800'
-								: 'text-gray-800'
+									? 'bg-red-500'
+									: 'bg-white'
+								: 'bg-white'
 						}`}
+						onPress={() => handleAnswerSelect(option)}
+						disabled={selectedAnswer !== null}
 					>
-						{option}
-					</Text>
-				</TouchableOpacity>
-			))}
+						<Text
+							className={`text-lg font-semibold ${
+								selectedAnswer
+									? option ===
+									  challenge.quizzes[currentQuestion]
+											.correct_answer
+										? 'text-white'
+										: selectedAnswer === option
+										? 'text-white'
+										: 'text-gray-800'
+									: 'text-gray-800'
+							}`}
+						>
+							{option}
+						</Text>
+					</TouchableOpacity>
+				))}
+			</View>
 
 			{/* {selectedAnswer !== null && (
 				<Text
@@ -107,7 +109,7 @@ export default function QuizScreen() {
 			)} */}
 
 			<TouchableOpacity
-				className={`p-4 rounded-lg mt-4 ${
+				className={`p-4 rounded-lg mt-12 ${
 					selectedAnswer ? 'bg-green-500' : 'bg-gray-300'
 				}`}
 				onPress={handleNextQuestion}
