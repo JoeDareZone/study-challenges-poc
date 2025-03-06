@@ -10,7 +10,11 @@ export default function SubjectScreen() {
 	const { challenges } = useAllChallenges()
 
 	const filteredSubjects = Subjects.filter(
-		subject => !challenges.some(challenge => challenge.subject === subject)
+		subject =>
+			!challenges.find(
+				challenge =>
+					challenge.subject === subject && challenge.grade === grade
+			)
 	)
 
 	return (
