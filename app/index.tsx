@@ -59,24 +59,47 @@ export default function HomeScreen() {
 				<FlatList
 					data={todaysChallenges}
 					keyExtractor={item => item.id}
-					contentContainerStyle={{ paddingTop: 20 }}
+					contentContainerStyle={{
+						paddingTop: 20,
+						paddingHorizontal: 16,
+					}}
 					renderItem={({ item }) => (
-						<View className='bg-white p-4 rounded-lg mb-4 shadow'>
-							<Text className='text-lg font-semibold mb-2'>
-								Daily Challenge
-							</Text>
-							<Text className='text-gray-600'>
-								{item.subject} - {item.grade}
-							</Text>
-
-							{item.completed ? (
-								<Text className='text-green-500 mt-2'>
-									✅ Challenge Completed Today!
+						<View className='bg-white rounded-xl shadow-md p-6 mb-6'>
+							<View className='flex-row justify-between items-center mb-2'>
+								<Text className='text-lg font-bold text-gray-800'>
+									Daily Challenge
 								</Text>
+								<View className='flex-row gap-x-2'>
+									{item.completed && (
+										<Text className='text-sm font-semibold text-green-600'>
+											Completed
+										</Text>
+									)}
+									{!item.completed && (
+										<Text className='text-sm font-semibold text-red-600'>
+											Not Completed
+										</Text>
+									)}
+								</View>
+							</View>
+							<View className='flex-row justify-between mb-4'>
+								<Text className='text-gray-700 pt-1'>
+									{item.subject} - {item.grade}
+								</Text>
+								<Text className={`text-sm font-semibold ${item.completed ? 'text-white bg-gray-600' : 'text-gray-600 bg-gray-200'} rounded-md px-2 py-1`}>
+									50 XP
+								</Text>
+							</View>
+							{item.completed ? (
+								<View className='bg-green-100 border border-green-400 rounded-md p-3'>
+									<Text className='text-green-600 text-center font-semibold'>
+										✅ Challenge Completed Today!
+									</Text>
+								</View>
 							) : (
-								<View>
+								<View className='flex-row gap-x-4'>
 									<TouchableOpacity
-										className='p-3 rounded-lg mt-2 bg-blue-500'
+										className='flex-1 bg-blue-500 p-3 rounded-lg'
 										onPress={() =>
 											router.push(
 												`/flashcards?grade=${item.grade}&subject=${item.subject}`
@@ -89,12 +112,12 @@ export default function HomeScreen() {
 									</TouchableOpacity>
 
 									<TouchableOpacity
-										className='p-3 rounded-lg mt-2 bg-green-500'
-										onPress={() => {
+										className='flex-1 bg-green-500 p-3 rounded-lg'
+										onPress={() =>
 											router.push(
 												`/quiz?grade=${item.grade}&subject=${item.subject}`
 											)
-										}}
+										}
 									>
 										<Text className='text-white text-center font-bold'>
 											Attempt Quiz
