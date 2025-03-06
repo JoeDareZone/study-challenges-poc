@@ -25,3 +25,7 @@ export const getCategoryIdFromSubject = (subject: string) => {
 	}
 	return categoryMapping[subject]
 }
+
+export const getPercentage = (score: number, total: number) => {
+	return ((score / total) * 100).toFixed(2)
+}

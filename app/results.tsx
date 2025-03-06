@@ -1,5 +1,6 @@
 import { useChallenge } from '@/hooks/useChallenge'
 import { useXP } from '@/hooks/useXP'
+import { getPercentage } from '@/utils/helpers'
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import { useEffect } from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
@@ -14,10 +15,8 @@ export default function ResultScreen() {
 	const { addXP } = useXP()
 
 	const xpEarned = 50
-	const percentage = ((Number(score) / Number(totalQuestions)) * 100).toFixed(
-		1
-	)
-	const isPassed = Number(percentage) >= 80
+	const scorePercentage = getPercentage(Number(score), Number(totalQuestions))
+	const isPassed = Number(scorePercentage) >= 80
 
 	useEffect(() => {
 		loadStoredChallenge()
@@ -50,7 +49,7 @@ export default function ResultScreen() {
 					Your Score
 				</Text>
 				<Text className='text-4xl font-bold text-gray-900 text-center'>
-					{score} / {totalQuestions} ({percentage}%)
+					{score} / {totalQuestions} ({scorePercentage}%)
 				</Text>
 				<Text className='text-base text-gray-600 text-center mt-2'>
 					You needed <Text className='font-bold'>80%</Text> or more to
