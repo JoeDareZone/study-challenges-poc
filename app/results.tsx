@@ -3,7 +3,7 @@ import { useStreak } from '@/hooks/useStreak'
 import { useXP } from '@/hooks/useXP'
 import { getPercentage } from '@/utils/helpers'
 import { useLocalSearchParams, useRouter } from 'expo-router'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
 
 export default function ResultScreen() {
@@ -16,16 +16,31 @@ export default function ResultScreen() {
 	const { addXP } = useXP()
 	const { updateStreak } = useStreak()
 	const resultsHandled = useRef(false)
+	const xpAdded = useRef(false)
+	const [scorePercentage, setScorePercentage] = useState('')
+	const [isPassed, setIsPassed] = useState(false)
 
 	const xpEarned = 50
-	const scorePercentage = getPercentage(Number(score), Number(totalQuestions))
-	const isPassed = Number(scorePercentage) >= 80
 
 	const handleChallengeCompletion = async () => {
 		await completeChallenge()
-		await addXP(xpEarned)
 		await updateStreak()
+		if (!xpAdded.current) {
+			await addXP(xpEarned)
+			xpAdded.current = true
+		}
 	}
+
+	const forceChallengeCompletion = async () => {
+		setScorePercentage('100')
+		setIsPassed(true)
+		await handleChallengeCompletion()
+	}
+
+	useEffect(() => {
+		setScorePercentage(getPercentage(Number(score), Number(totalQuestions)))
+		setIsPassed(Number(scorePercentage) >= 80)
+	}, [score, totalQuestions])
 
 	useEffect(() => {
 		const handleResults = async () => {
@@ -91,6 +106,14 @@ export default function ResultScreen() {
 			>
 				<Text className='text-lg font-bold text-white text-center'>
 					Home
+				</Text>
+			</TouchableOpacity>
+			<TouchableOpacity
+				className='w-full max-w-md p-4 rounded-lg bg-orange-500 shadow-lg'
+				onPress={forceChallengeCompletion}
+			>
+				<Text className='text-lg font-bold text-white text-center'>
+					Complete-a-quiz
 				</Text>
 			</TouchableOpacity>
 		</View>
