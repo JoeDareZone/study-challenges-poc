@@ -29,3 +29,6 @@ export const getCategoryIdFromSubject = (subject: string) => {
 export const getPercentage = (score: number, total: number) => {
 	return ((score / total) * 100).toFixed(2)
 }
+
+export const generateId = () =>
+	`${Date.now()}-${Math.random().toString(36).slice(2, 11)}`

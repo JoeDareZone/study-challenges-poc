@@ -1,10 +1,11 @@
 import { Challenge, QuizQuestion } from '@/types/types'
-import { getCategoryIdFromSubject, getDifficulty } from '@/utils/helpers'
+import {
+	generateId,
+	getCategoryIdFromSubject,
+	getDifficulty,
+} from '@/utils/helpers'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useState } from 'react'
-
-const generateId = () =>
-	`${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
 
 const API_URL = 'https://opentdb.com/api.php'
 
