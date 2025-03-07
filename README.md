@@ -1,50 +1,49 @@
-# Welcome to your Expo app 👋
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Study Challenges PoC
 
-## Get started
+This repository contains a proof-of-concept for the Study Challenges feature design. The feature aims to boost user retention by turning daily study sessions into a structured, gamified, and habit-forming experience
 
-1. Install dependencies
+## Features
 
-   ```bash
-   npm install
-   ```
+- Daily Personalized Study Sessions:
+Users choose their grade and subject, and the app generates a daily challenge consisting of flashcards and a quiz.
+- Active Learning:
+To complete the daily challenge, users must review the flashcards and achieve a minimum of 80% correct answers on the quiz.
+- Gamification & Habit Formation:
+Users earn XP for passing quizzes and build streaks, motivating them to return daily.
+- Note: For this PoC, flashcards are sourced from an existing API. Future iterations will integrate AI-generated flashcards and a spaced repetition system (SRS) to optimize review intervals.
 
-2. Start the app
 
-   ```bash
-    npx expo start
-   ```
+## Run Locally
 
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+Clone the project
 
 ```bash
-npm run reset-project
+  git clone https://github.com/JoeDareZone/study-challenges-poc.git
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Go to the project directory
 
-## Learn more
+```bash
+  cd study-challenges-poc
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+Install dependencies
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```bash
+  npm install
+```
 
-## Join the community
+Start the server
 
-Join our community of developers creating universal apps.
+```bash
+  npm run start
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
+## Feedback
+
+For any questions or further discussion, please reach out to Joe at joewhocodes@gmail.com
+
+
+
