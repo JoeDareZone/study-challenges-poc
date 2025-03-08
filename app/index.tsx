@@ -181,7 +181,7 @@ export default function HomeScreen() {
 									onPress={() => handleResetAllChallenges()}
 								>
 									<Text className='text-white text-lg font-bold text-center'>
-										Reset All Challenges
+										Clear All Data
 									</Text>
 								</TouchableOpacity>
 							)}
@@ -192,3 +192,4 @@ export default function HomeScreen() {
 		</View>
 	)
 }
+st
