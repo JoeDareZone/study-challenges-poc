@@ -1,7 +1,12 @@
 
-## Study Challenges PoC
+## Study Challenges – Flashcard Learning App (Proof of Concept)
 
 This repository contains a proof-of-concept for the Study Challenges flashcard app. It's designed to support school-aged children with exam preparation by making studying more engaging and effective through interactive challenges.
+
+## Demo
+
+- [✅ Success path – quiz passed, earns XP & builds streak](https://youtube.com/shorts/lZH26bSWK00?si=Kjg9nzrgAM8w5nCa)
+- [❌ Failure path – new challenge started, but quiz failed](https://youtube.com/shorts/3ndnFsAa630?si=vtcxsTE5OvX8G26H)
 
 
 ## Features
@@ -17,34 +22,42 @@ Users earn XP for passing quizzes and build streaks, motivating them to return d
 
 ## Run Locally
 
-Clone the project
+You'll need a simulator or Expo Go on your phone to preview the app.
+
+1. Clone the project
 
 ```bash
   git clone https://github.com/JoeDareZone/study-challenges-poc.git
 ```
 
-Go to the project directory
+2. Go to the project directory
 
 ```bash
   cd study-challenges-poc
 ```
 
-Install dependencies
+3. Install dependencies
 
 ```bash
   npm install
 ```
 
-Start the server
+4. Start the app (Expo or React Native CLI)
 
 ```bash
   npm run start
 ```
 
+## Tech Stack
+
+- React Native
+- Expo
+- Expo Router
+- TypeScript
+- NativeWind
 
 ## Feedback
 
 For any questions or further discussion, please reach out to Joe at joewhocodes@gmail.com
-
 
 
