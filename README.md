@@ -1,7 +1,8 @@
 
 ## Study Challenges PoC
 
-This repository contains a proof-of-concept for the Study Challenges feature design. The feature aims to boost user retention by turning daily study sessions into a structured, gamified, and habit-forming experience
+This repository contains a proof-of-concept for the Study Challenges flashcard app. It's designed to support school-aged children with exam preparation by making studying more engaging and effective through interactive challenges.
+
 
 ## Features
 
